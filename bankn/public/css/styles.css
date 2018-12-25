@@ -1,0 +1,275 @@
+@font-face {
+    font-family: 'SF UI Display';
+    src: url('../fonts/SFUIDisplay-Regular.eot');
+    src: url('../fonts/SFUIDisplay-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/SFUIDisplay-Regular.woff2') format('woff2'), url('../fonts/SFUIDisplay-Regular.woff') format('woff'), url('../fonts/SFUIDisplay-Regular.svg#SFUIDisplay-Regular') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF UI Display';
+    src: url('../fonts/SFUIDisplay-Medium.eot');
+    src: url('../fonts/SFUIDisplay-Medium.eot?#iefix') format('embedded-opentype'), url('../fonts/SFUIDisplay-Medium.woff2') format('woff2'), url('../fonts/SFUIDisplay-Medium.woff') format('woff'), url('../fonts/SFUIDisplay-Medium.svg#SFUIDisplay-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF UI Display';
+    src: url('../fonts/SFUIDisplay-Bold.eot');
+    src: url('../fonts/SFUIDisplay-Bold.eot?#iefix') format('embedded-opentype'), url('../fonts/SFUIDisplay-Bold.woff2') format('woff2'), url('../fonts/SFUIDisplay-Bold.woff') format('woff'), url('../fonts/SFUIDisplay-Bold.svg#SFUIDisplay-Bold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF UI Display';
+    src: url('../fonts/SFUIDisplay-Black.eot');
+    src: url('../fonts/SFUIDisplay-Black.eot?#iefix') format('embedded-opentype'), url('../fonts/SFUIDisplay-Black.woff2') format('woff2'), url('../fonts/SFUIDisplay-Black.woff') format('woff'), url('../fonts/SFUIDisplay-Black.svg#SFUIDisplay-Black') format('svg');
+    font-weight: 900;
+    font-style: normal;
+}
+
+body {
+    font-family: SF UI Display !important;
+}
+
+.input-normal {
+    height: 36px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    color: #000;
+    font-weight: 500;
+}
+
+.input-normal::placeholder {
+    font-size: 14px;
+    color: #888;
+    font-weight: 500;
+}
+
+
+.input-normal:disabled {
+    background: #fff;
+}
+
+.input-normal-label {
+    font-weight: 500;
+    color: #000;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.input-group {
+    height: 36px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    color: #000;
+    font-weight: 500;
+}
+
+.input-group>input {
+    border: 0px;
+    color: #000;
+}
+
+.input-normal>input::placeholder {
+    font-size: 14px;
+    color: #888;
+    font-weight: 500;
+}
+
+.input-group>img {
+    cursor: pointer;
+}
+
+.button-big {
+    background: #FC4100;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    border: 0px;
+    font-weight: 900;
+    font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.button-med {
+    background: #FC4100;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    border: 0px;
+    font-weight: 900;
+    font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.button-small {
+    background: #FC4100;
+    border-radius: 5px;
+    padding: 5px 30px;
+    text-align: center;
+    border: 0px;
+    font-weight: 900;
+    font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.button-med.neg {
+    background: #6F6A6A !important;
+}
+
+.button-med.bn-close {
+    background: #0E1958 !important; 
+}
+
+.button-modal {
+    width: 152px !important;
+}
+
+.navbar {
+    height: 60px;
+    background: #fff;
+    background-image: url(../imgs/bg.png);
+    background-size: cover;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nav-button-hili {
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: #FC4100;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 14px;
+    border: 0px;
+    margin-right: 25px;
+}
+
+.nav-button-nobg {
+    background: transparent;
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: #fff;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 14px;
+    border: 0px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0E1958;
+    margin-bottom: 25px;
+}
+
+.select-custom {
+    height: 36px;
+    border-radius: 5px;
+    border: 1px solid #CCCCCC;
+    width: 100%;
+    padding-top: 7px !important;
+    padding: 10px;
+    font-size: 14px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../icons/select-arrow.png) 96% / 3% no-repeat;
+}
+
+.select-custom select::-ms-expand {
+    display: none;
+}
+
+.modal-dialog {
+    width: 400px;
+}
+
+.modal-style {
+    padding: 30px 35px; 
+}
+
+.modal-title {
+    color: #001339;
+    font-size: 24px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.modal-notif {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.modal-des {
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.bn-link {
+    color: #004EE4;
+}
+
+.bn-link:hover {
+    color: #004EE4;
+    text-decoration: underline;
+}
+
+.acc-ava {
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    background: #FC4100;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    margin-right: 20px;
+    text-align: center;
+    padding-top: 5px;
+}
+
+.acc-name {
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: 700;
+}
+
+#card-topup {
+    cursor: pointer;
+}
+
+.home-dir {
+    text-transform: uppercase;
+    color: #888;
+    font-size: 14px;
+    font-weight: 700;
+    margin-right: 30px;
+}
+
+.home-dir>a {
+    color: #888;
+    text-decoration: none;
+}
+
+.home-dir>a:hover {
+    color: #888;
+}

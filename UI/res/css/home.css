@@ -1,0 +1,128 @@
+.tab-bar {
+    position: relative;
+    height: 50px;
+    padding-top: 10px;
+    background: #FFFFFF;
+    border-bottom: 2px solid #CCCCCC;
+}
+
+.tab-group {
+    font-weight: 700;
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    padding-left: 100px !important;
+    padding-right: 100px !important;
+    width: 100%;
+}
+
+.tab-in {
+    border-bottom: 2px solid #0E1958;
+    color: #0E1958 !important;
+    height: 40px;
+    cursor: pointer;
+}
+
+.tab-out {
+    -webkit-filter: grayscale(100%);
+    /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+    height: 40px;
+    cursor: pointer;
+}
+
+.tab>img {
+    margin-right: 20px;
+}
+
+.card-container {
+    display: grid;
+    grid-column-gap: 60px;
+    grid-row-gap: 50px;
+    grid-template-columns: auto auto;
+}
+
+.card-item {
+    border-radius: 10px;
+    background-image: url(../imgs/bg.png);
+    background-size: cover;
+    border: 0px;
+    padding: 30px;
+    color: #fff;
+    position: relative;
+    height: 237px;
+}
+
+.card-num {
+    font-weight: 700;
+    font-size: 36px;
+}
+
+.card-balance {
+    font-weight: 300;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.card-balance::after {
+    content: ' VNĐ';
+}
+
+#page-content {
+    padding-top: 130px;
+    margin-bottom: 50px;
+}
+
+.rep-container {
+    display: grid;
+    grid-column-gap: 60px;
+    grid-row-gap: 40px;
+    grid-template-columns: auto auto auto;
+}
+
+.trans-container {
+    display: grid;
+    grid-column-gap: 60px;
+    grid-row-gap: 50px;
+    grid-template-columns: auto auto;
+}
+
+.trans-item {
+    background: #FFFFFF;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 20px 30px;
+}
+
+.trans-from {
+    color: #0E1958;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.trans-to {
+    color: #FC4100;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.trans-to>img {
+    margin-right: 10px;
+}
+
+.trans-date {
+    font-size: 14px;
+    font-weight: 300;
+    color: #888;
+}
+
+.trans-amount {
+    color: #3ADF00;
+    font-weight: 700;
+    font-size: 32px;
+}
+
+.trans-amount::after {
+    content: ' VNĐ';
+    font-size: 18px;
+}

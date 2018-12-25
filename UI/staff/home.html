@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="res/icons/favicon.png" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="res/css/styles.css" rel="stylesheet" type="text/css">
+    <link href="res/css/home.css" rel="stylesheet" type="text/css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <title>Home</title>
+</head>
+
+<body>
+
+    <!--Add Acc Modal-->
+    <div id="add-acc-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
+        <div class="modal" role="dialog" style="display: block;">
+            <div class="modal-dialog" role="document" style="width: 400px;">
+                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
+                    <div class="modal-title">
+                        Tạo tài khoản
+                    </div>
+                    <div class="modal-des">
+                        Nhập các thông tin cần thiết
+                    </div>
+                    <div style="margin: 20px 0px 10px 0px">
+                        <label class="input-normal-label">Tên đăng nhập</label>
+                        <input type="text" class="input-normal" style="width: 100%" placeholder="Nhập tên đăng nhập">
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label class="input-normal-label">Mật khẩu</label>
+                        <input type="text" class="input-normal" style="width: 100%" placeholder="Nhập mật khẩu">
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label class="input-normal-label">Họ tên</label>
+                        <input type="text" class="input-normal" style="width: 100%" placeholder="Nhập họ tên">
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label class="input-normal-label">Email</label>
+                        <input type="text" class="input-normal" style="width: 100%" placeholder="Nhập email">
+                    </div>
+                    <div style="margin-bottom: 30px;">
+                        <label class="input-normal-label">Số điện thoại</label>
+                        <input type="number" class="input-normal" style="width: 100%" placeholder="Nhập số điện thoại">
+                    </div>
+                    <div style="text-align: center; padding-left: 0px;">
+                        <button id="add-acc-neg" class="button-med neg button-modal" style="width: 324px; float: left">Hủy</button>
+                        <button id="add-acc-pos" class="button-med button-modal" style="width: 324px; float: right">Tạo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Sign Out Modal-->
+    <div id="sout-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
+        <div class="modal" role="dialog" style="display: block;">
+            <div class="modal-dialog" role="document" style="width: 400px;">
+                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
+                    <div class="modal-title">
+                        Đăng xuất
+                    </div>
+                    <div class="modal-notif">
+                        Bạn muốn đăng xuất?
+                    </div>
+                    <div style="text-align: center; padding-left: 0px;">
+                        <button id="sout-neg" class="button-med neg button-modal" style="width: 324px; float: left">Hủy</button>
+                        <button id="sout-pos" class="button-med button-modal" style="width: 324px; float: right">Đăng xuất</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Navbar-->
+
+    <div style="position: fixed; width: 100%; z-index: 15;">
+
+        <div class="navbar" style="width: 100%; top: 0;">
+            <div class="container">
+                <div class="row" style="width: 100%; height: 100%;">
+                    <div class="col-sm-6">
+                        <img src="res/icons/logo-white.png">
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <button id="sign-out-btn" class="nav-button-nobg">ĐĂNG XUẤT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <div id="page-content" class="container">
+
+        <div id="cards" style="display: block;">
+
+            <div class="page-title" style="width: 100%; margin-bottom: 70px;">
+                Danh sách tài khoản
+                <button id="add-acc-btn" class="button-small" style="float: right">Thêm</button>
+            </div>
+            <div class="container">
+                <div class="acc-container">
+                    <div class="acc-item">
+                        <div class="acc-ava" style="float: left"></div>
+                        <div>
+                            <div class="acc-name">Trần Lê Nguyễn Hoàng Minh</div>
+                        </div>
+                    </div>
+                    <div class="acc-item">
+                        <div class="acc-ava" style="float: left"></div>
+                        <div>
+                            <div class="acc-name">Trần Lê Nguyễn Hoàng Minh</div>
+                        </div>
+                    </div>
+                    <div class="acc-item">
+                        <div class="acc-ava" style="float: left"></div>
+                        <div>
+                            <div class="acc-name">Lê Nguyễn Hoàng Minh</div>
+                        </div>
+                    </div>
+                    <div class="acc-item">
+                        <div class="acc-ava" style="float: left"></div>
+                        <div>
+                            <div class="acc-name">Trần Lê Nguyễn Hoàng Minh</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="res/js/home.js"></script>
+    <script src="res/js/scripts.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+
+</body>
+
+</html>

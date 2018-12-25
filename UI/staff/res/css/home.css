@@ -1,0 +1,44 @@
+#page-content {
+    padding-top: 80px;
+    margin-bottom: 50px;
+}
+
+.card-container {
+    display: grid;
+    grid-column-gap: 60px;
+    grid-row-gap: 50px;
+    grid-template-columns: auto auto;
+}
+
+.card-item {
+    border-radius: 10px;
+    background-image: url(../imgs/bg.png);
+    background-size: cover;
+    border: 0px;
+    padding: 30px;
+    color: #fff;
+    position: relative;
+    height: 237px;
+}
+
+.card-num {
+    font-weight: 700;
+    font-size: 36px;
+}
+
+.card-balance {
+    font-weight: 300;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.card-balance::after {
+    content: ' VNĐ';
+}
+
+.acc-container {
+    display: grid;
+    grid-column-gap: 60px;
+    grid-row-gap: 40px;
+    grid-template-columns: auto auto auto;
+}
