@@ -1,3 +1,5 @@
+/bankn-server/bankn-server-internal/node_modules
+/bankn-server/bankn-server-internal/Backend
 /node_modules/.bin/atob
 /node_modules/.bin/atob.cmd
 /node_modules/.bin/csv-parser
