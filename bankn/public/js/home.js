@@ -10,12 +10,12 @@ $(document).ready(function () {
         $("#" + id).show();
     })
 
-    $("#add-acc-btn").click(function () {
-        $("#add-acc-modal").fadeIn("fast");
+    $("#add-rep-btn").click(function () {
+        $("#add-rep-modal").fadeIn("fast");
     })
 
-    $("#add-acc-neg").click(function() {
-        $("#add-acc-modal").fadeOut("fast");
+    $("#add-rep-neg").click(function() {
+        $("#add-rep-modal").fadeOut("fast");
     })
 
     $("#card-remove").click(function() {
