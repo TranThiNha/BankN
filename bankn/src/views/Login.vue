@@ -10,14 +10,14 @@
           <span>Đăng nhập</span>
         </div>
         <div id="form">
-          <form>
+          <form v-on:submit.prevent="login">
             <div style="margin-bottom: 20px;">
               <label class="input-normal-label">Đăng nhập</label>
               <input
                 type="text"
                 class="input-normal"
                 style="width: 100%"
-                placeholder="Nhập tên đăng nhập"
+                placeholder="Nhập tên đăng nhập" v-model="dataLogin.username"
               >
             </div>
             <div style="margin-bottom: 20px;">
@@ -26,13 +26,12 @@
                 type="password"
                 class="input-normal"
                 style="width: 100%"
-                placeholder="Nhập mật khẩu"
+                placeholder="Nhập mật khẩu" v-model="dataLogin.password"
               >
             </div>
             <!-- <vue-recaptcha @verify="onVerify" sitekey="6LewKIUUAAAAAP1n2vt257R034CUmGSlsHNsJFaU"></vue-recaptcha> -->
             <div style="margin-top: 30px">
               <button
-                @click="login()"
                 type="submit"
                 class="button-big"
                 style="width: 100%;"
@@ -47,20 +46,53 @@
 
 <script>
 // @ is an alias to /src
-import VueRecaptcha from "vue-recaptcha";
+// import VueRecaptcha from "vue-recaptcha";
+import axios from "axios";
 
 export default {
   name: "home",
+  data() {
+    return {
+      dataLogin: {}
+    }
+  },
   components: {
-    VueRecaptcha
+    // VueRecaptcha
   },
   methods: {
     onVerify: function(response) {
       //chỗ này là hiện cái nút lên nè
     },
     login() {
-        //call api login
-        this.$router.replace('/');
+      // this.$router.replace("/home");
+
+      // var passmd5 = md5($("#password").val());
+      // this.dataLogin.password = passmd5;
+        axios
+          .post(`http://192.168.0.116:3000/auth`, this.dataLogin)
+          .then(response => {
+            alert(JSON.stringify(response));
+            // if (response.data.auth) {
+            //   this.auth = response.data.auth;
+            //   this.access_token = response.data.access_token;
+            //   this.refresh_token = response.data.refresh_token;
+            //   this.$localStorage.set(
+            //     "access_token",
+            //     response.data.access_token
+            //   );
+            //   this.$localStorage.set(
+            //     "refresh_token",
+            //     response.data.refresh_token
+            //   );
+            //   this.$router.replace({ name: "FormInformation" });
+            // }
+            // else {
+            //   $("#modal").fadeIn("fast");
+            // }
+          })
+          .catch(err => {
+            alert(err);
+          });
     }
   }
 };

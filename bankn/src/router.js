@@ -19,14 +19,14 @@ export default new Router({
     },
     {
       path: '/',
-      redirect: '/bankN'
+      redirect: '/login'
     },
     {
       path: '/bankN',
       component: General,
       children: [
         {
-          path: '/',
+          path: '/home',
           name: 'home',
           component: Home
         },
