@@ -1,5 +1,8 @@
 <template>
+  <div>
     <NavBarUser/>
+    <router-view/>
+  </div>
 </template>
 
 
@@ -7,8 +10,8 @@
 import NavBarUser from "@/components/NavBarUser.vue";
 
 export default {
-  components:{
-        NavBarUser
-    }
-}
+  components: {
+    NavBarUser
+  }
+};
 </script>
