@@ -6,7 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    accounts: [],
   },
   mutations: {
     SET_USER(state, payload){
@@ -14,6 +15,8 @@ export default new Vuex.Store({
     },
     REMOVE_USER(state){
       state.user = {};
+    SET_ACCOUNTS(state, payload){
+      state.accounts = payload;
     }
   },
   actions

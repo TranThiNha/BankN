@@ -77,11 +77,12 @@ export default {
               var user = {
                 role: response.data.role,
                 access_token: response.data.access_token,
-                refresh_token: response.data.refresh_token
+                refresh_token: response.data.refresh_token,
+                id: response.data.id
               };
               this.$store.dispatch("Login", user);
               this.$router.replace("/home");
-            } else{
+            } else {
               alert("Sai");
             }
           })
