@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import General from './views/General.vue'
 import Transfer from './views/Transfer.vue'
 import Login from './views/Login.vue'
+import InternalTransfer from './components/InternalTransfer.vue'
 
 Vue.use(Router)
 
@@ -18,8 +19,7 @@ export default new Router({
     },
     {
       path: '/',
-      name: 'General',
-      component: General,
+      redirect: '/bankN'
     },
     {
       path: '/bankN',
@@ -33,7 +33,13 @@ export default new Router({
         {
           path: '/transfer',
           name: 'Transfer',
-          component: Transfer
+          component: Transfer,
+          children: [
+            {
+              path: '/internal',
+              component: InternalTransfer
+            }
+          ]
         },
       ]
     },

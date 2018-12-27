@@ -21,7 +21,7 @@
                         <input type="text" class="input-normal" style="width: 100%" placeholder="Nhập tên gợi nhớ">
                     </div>
                     <div style="text-align: center; padding-left: 0px;">
-                        <button id="add-rep-neg" class="button-med neg button-modal" style="width: 324px; float: left">Hủy</button>
+                        <button id="add-rep-neg" class="button-med neg button-modal" style="width: 324px; float: left" v-on:click="CancelAddContact()">Hủy</button>
                         <button id="add-rep-pos" class="button-med button-modal" style="width: 324px; float: right">Thêm</button>
                     </div>
                 </div>
@@ -155,7 +155,7 @@
             <Contact/>
           </div>
         </div>
-        <div style="margin-top: 80px; text-align: center">
+        <div style="margin-top: 80px; text-align: center" v-on:click="AddContactReceive()">
           <button
             id="add-rep-btn"
             type="submit"
@@ -255,6 +255,12 @@ export default {
     },
     TransactionHistory(){
       this.ChangeTab();
+    },
+    AddContactReceive(){
+      this.$jQuery("#add-rep-modal").show();
+    },
+    CancelAddContact(){
+      this.$jQuery("#add-rep-modal").fadeOut();
     }
   }
 };

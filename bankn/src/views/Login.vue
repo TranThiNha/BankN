@@ -29,7 +29,7 @@
                 placeholder="Nhập mật khẩu"
               >
             </div>
-            <vue-recaptcha @verify="onVerify" sitekey="6LewKIUUAAAAAP1n2vt257R034CUmGSlsHNsJFaU"></vue-recaptcha>
+            <!-- <vue-recaptcha @verify="onVerify" sitekey="6LewKIUUAAAAAP1n2vt257R034CUmGSlsHNsJFaU"></vue-recaptcha> -->
             <div style="margin-top: 30px">
               <button
                 @click="login()"
@@ -60,6 +60,7 @@ export default {
     },
     login() {
         //call api login
+        this.$router.replace('/');
     }
   }
 };
