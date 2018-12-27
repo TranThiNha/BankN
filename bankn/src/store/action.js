@@ -1,8 +1,19 @@
 import axios from 'axios'
 
 export default {
-    login(ctx, info){
-        alert("vooo");
-        ctx.commit('SET_USER', info);
+    Login(ctx, user){
+        ctx.commit('SET_USER', user);
+    },
+    LogOut(ctx){
+        ctx.commit('REMOVE_USER');
+    },
+    GetListAccount(ctx){
+        alert(1);
+        axios.get("http://192.168.0.116:3000/accounts",
+        {
+            headers:{
+                x_access_token: [...state.user]
+            }
+        })
     }
 }

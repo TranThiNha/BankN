@@ -89,25 +89,6 @@
         </div>
     </div>
 
-    <!--Sign Out Modal-->
-    <div id="sout-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
-        <div class="modal" role="dialog" style="display: block;">
-            <div class="modal-dialog" role="document" style="width: 400px;">
-                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
-                    <div class="modal-title">
-                        Đăng xuất
-                    </div>
-                    <div class="modal-notif">
-                        Bạn muốn đăng xuất?
-                    </div>
-                    <div style="text-align: center; padding-left: 0px;">
-                        <button id="sout-neg" class="button-med neg button-modal" style="width: 324px; float: left">Hủy</button>
-                        <button id="sout-pos" class="button-med button-modal" style="width: 324px; float: right">Đăng xuất</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div style="position: fixed; width: 100%; z-index: 15;">
 
       <div class="tab-bar" style="width: 100%;">
@@ -230,12 +211,23 @@
 // @ is an alias to /src
 import Card from "@/components/Card.vue";
 import Contact from "@/components/Contact.vue";
+import { mapActions } from "vuex";
+import axios from "axios";
 
 export default {
   name: "home",
   components: {
     Card,
     Contact
+  },
+  created() {
+    axios.get("http://192.168.0.116:3000/accounts",
+        {
+            headers:{
+                 "x-access-token": this.$store.state.user.access_token,
+                 "id": 2
+            }
+        })
   },
   methods: {
     ChangeTab() {

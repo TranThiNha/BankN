@@ -3,14 +3,14 @@
     <div class="navbar" style="width: 100%; top: 0;">
       <div class="container">
         <div class="row" style="width: 100%; height: 100%;">
-          <router-link to="/bankN">
+          <router-link to="/home">
             <div class="col-sm-6">
               <img src="/icons/logo-white.png">
             </div>
           </router-link>
           <div class="col-sm-6 text-right">
             <button id="transfer-act" class="nav-button-hili" v-on:click="Transfer()">CHUYỂN KHOẢN</button>
-            <button id="sign-out-btn" class="nav-button-nobg">ĐĂNG XUẤT</button>
+            <button id="sign-out-btn" class="nav-button-nobg" v-on:click="LogOut()">ĐĂNG XUẤT</button>
           </div>
         </div>
       </div>
@@ -45,6 +45,41 @@
         </div>
       </div>
     </div>
+
+    <!--Log Out Modal-->
+    <div
+      id="sout-modal"
+      class="modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div class="modal-title">Đăng xuất</div>
+            <div class="modal-notif">Bạn muốn đăng xuất?</div>
+            <div style="text-align: center; padding-left: 0px;">
+              <button
+                id="sout-neg"
+                class="button-med neg button-modal"
+                style="width: 324px; float: left"
+                @click="CancelLogOut()"
+              >Hủy</button>
+              <router-link to="/login">
+                <button
+                  id="sout-pos"
+                  class="button-med button-modal"
+                  style="width: 324px; float: right"
+                  @click="AcceptLogOut()"
+                >Đăng xuất</button>
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -57,6 +92,16 @@ export default {
     },
     CloseModal() {
       this.$jQuery("#type-modal").fadeOut();
+    },
+    LogOut() {
+      this.$jQuery("#sout-modal").show();
+    },
+    CancelLogOut() {
+      this.$jQuery("#sout-modal").fadeOut();
+    },
+    AcceptLogOut() {
+      this.$store.dispatch("LogOut");
+      this.$jQuery("#sout-modal").hide();
     }
   },
   watch: {

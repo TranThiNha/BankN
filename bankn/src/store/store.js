@@ -10,8 +10,10 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_USER(state, payload){
-      JSON.stringify(payload);
       state.user = payload;
+    },
+    REMOVE_USER(state){
+      state.user = {};
     }
   },
   actions

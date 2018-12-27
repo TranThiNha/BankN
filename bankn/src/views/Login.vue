@@ -51,7 +51,7 @@ import axios from "axios";
 import { mapActions } from "vuex";
 
 export default {
-  name: "home",
+  name: "login",
   data() {
     return {
       dataLogin: {}
@@ -74,15 +74,15 @@ export default {
           .then(response => {
             alert(JSON.stringify(response));
             if (response.data.auth == 1){
-              var info = {
+              var user = {
                 role: response.data.role,
                 access_token: response.data.access_token,
                 refresh_token: response.data.refresh_token
               };
-              this.$store.dispatch("login", info);
+              this.$store.dispatch("Login", user);
               this.$router.replace("/home");
             } else{
-
+              alert("Sai");
             }
           })
           .catch(err => {
