@@ -72,7 +72,7 @@ export default {
         axios
           .post(`http://192.168.0.116:3000/auth`, this.dataLogin)
           .then(response => {
-            alert(JSON.stringify(response));
+            // alert(JSON.stringify(response));
             if (response.data.auth == 1){
               var user = {
                 role: response.data.role,

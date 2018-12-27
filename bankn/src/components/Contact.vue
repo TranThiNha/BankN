@@ -1,9 +1,26 @@
 <template>
   <div class="rep-item">
-    <div class="rep-ava" style="float: left"></div>
+    <div class="rep-ava" style="float: left">{{letter}}</div>
     <div>
-      <div class="rep-name">Trần Lê Nguyễn Hoàng Minh</div>
-      <div class="rep-num">0297 8927 2828</div>
+      <div class="rep-name">{{nameSug}}</div>
+      <div class="rep-num">{{account}}</div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      letter: ""
+    }
+  },
+  props:{
+    nameSug: String,
+    account: String
+  },
+  created() {
+    this.letter = this.nameSug.slice(0,1);
+  },
+}
+</script>

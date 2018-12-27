@@ -20,7 +20,7 @@
                 type="number"
                 class="input-normal"
                 style="width: 100%"
-                placeholder="Nhập số tài khoản"
+                placeholder="Nhập số tài khoản" v-model="contact.accountNumber"
               >
             </div>
             <div style="margin-bottom: 30px;">
@@ -29,7 +29,7 @@
                 type="text"
                 class="input-normal"
                 style="width: 100%"
-                placeholder="Nhập tên gợi nhớ"
+                placeholder="Nhập tên gợi nhớ" v-model="contact.nameSug"
               >
             </div>
             <div style="text-align: center; padding-left: 0px;">
@@ -37,12 +37,12 @@
                 id="add-rep-neg"
                 class="button-med neg button-modal"
                 style="width: 324px; float: left"
-                v-on:click="CancelAddContact()"
+                v-on:click="Cancelcontact()"
               >Hủy</button>
               <button
                 id="add-rep-pos"
                 class="button-med button-modal"
-                style="width: 324px; float: right"
+                style="width: 324px; float: right" v-on:click="AddContact(user)"
               >Thêm</button>
             </div>
           </div>
@@ -166,8 +166,8 @@
         <div class="page-title" style="width: 100%; text-align: center">Danh sách thẻ của bạn</div>
         <div class="container" style="padding: 0px 100px">
           <div class="card-container">
-            <div v-for="(account, id) in accounts" :key="id">
-              <Card/>
+            <div v-for="account in accounts" :key="account">
+              <Card v-bind:accountNumber="account.accountNumber" v-bind:balance="account.balance"/>
             </div>
           </div>
         </div>
@@ -181,14 +181,12 @@
         >Danh sách người nhận bạn từng giao dịch</div>
         <div class="container">
           <div class="rep-container">
-            <Contact/>
-            <Contact/>
-            <Contact/>
-            <Contact/>
-            <Contact/>
+            <div v-for="contact in contacts" :key="contact">
+              <Contact :nameSug="contact.nameSug" :account="contact.account"/>
+            </div>
           </div>
         </div>
-        <div style="margin-top: 80px; text-align: center" v-on:click="AddContactReceive()">
+        <div style="margin-top: 80px; text-align: center" v-on:click="contactReceive()">
           <button
             id="add-rep-btn"
             type="submit"
@@ -267,26 +265,32 @@ import axios from "axios";
 
 export default {
   name: "home",
+  data() {
+    return {
+      contact: {}
+    }
+  },
   components: {
     Card,
     Contact
   },
-  created() {
-    axios.get("http://192.168.0.116:3000/accounts",
-        {
-            headers:{
-                 "x-access-token": this.$store.state.user.access_token,
-                 "id": this.$store.state.user.id
-            }
-        }).then(response => {
-          alert(JSON.stringify(response));
-        })
-  },
   computed: {
     ...mapState(["accounts"]),
+    ...mapState(["contacts"]),
+    ...mapState(["user"])
   },
   created() {
-    this.$store.dispatch("updateAccounts", this.$store.state.user);
+    axios
+      .get("http://192.168.0.116:3000/accounts", {
+        headers: {
+          "x-access-token": this.$store.state.user.access_token,
+          id: this.$store.state.user.id
+        }
+      })
+      .then(response => {
+        // alert(JSON.stringify(response));
+        this.$store.dispatch("SetListAccount", response.data.accounts);
+      });
   },
   methods: {
     ChangeTab() {
@@ -305,15 +309,44 @@ export default {
     },
     ReceiveContact() {
       this.ChangeTab();
+      axios
+      .get("http://192.168.0.116:3000/contacts", {
+        headers: {
+          "x-access-token": this.$store.state.user.access_token,
+          id: this.$store.state.user.id
+        }
+      })
+      .then(response => {
+        // alert(JSON.stringify(response));
+        this.$store.dispatch("SetListContact", response.data.contacts);
+      });
     },
     TransactionHistory() {
       this.ChangeTab();
     },
-    AddContactReceive() {
+    contactReceive() {
       this.$jQuery("#add-rep-modal").show();
     },
-    CancelAddContact() {
+    Cancelcontact() {
       this.$jQuery("#add-rep-modal").fadeOut();
+    },
+    AddContact(user){
+      // alert(JSON.stringify(this.contact));
+      axios
+      .post("http://192.168.0.116:3000/contacts", this.contact, {
+        headers: {
+          "x-access-token": this.$store.state.user.access_token,
+          id: this.$store.state.user.id
+        }
+      })
+      .then(response => {
+        // alert(JSON.stringify(response));
+        if (response.data.msg == "success!")
+        {
+          this.$jQuery("#add-rep-modal").hide();
+          this.$store.dispatch("UpdateListContact", user)
+        }
+      });
     }
   }
 };
