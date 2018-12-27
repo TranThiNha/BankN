@@ -4,6 +4,10 @@ var express = require('express'),
     morgan = require('morgan');
 
 var authCtrl = require('./apiControllers/authCtrl');
+var contactCtrl = require('./apiControllers/contactCtrl');
+var accountCtrl = require('./apiControllers/accountCtrl');
+
+var verifyAccessToken = require('./repos/authRepo').verifyAccessToken;
 
 app = express();
 
@@ -11,7 +15,9 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/api/auth/', authCtrl);
+app.use('/auth/', authCtrl);
+app.use('/contact/', verifyAccessToken, contactCtrl);
+app.use('/account/', verifyAccessToken, accountCtrl);
 
 var PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

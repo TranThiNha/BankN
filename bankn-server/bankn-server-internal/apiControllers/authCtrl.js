@@ -12,7 +12,6 @@ router.post('/', (req, res) => {
         password: req.body.password,
         role: req.body.role
     }
-    console.log(JSON.stringify(user));
     userRepo.login(user).then(rows => {
         if (rows.length > 0) {
             var loginEntity = rows[0];
