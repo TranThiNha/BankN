@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import InternalTransfer from './views/InternalTransfer.vue'
 
 Vue.use(Router)
 
@@ -12,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/internal-transfer',
+      name: 'InternalTransfer',
+      component: InternalTransfer
     },
     {
       path: '/about',
