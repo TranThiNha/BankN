@@ -15,6 +15,7 @@ export default new Vuex.Store({
     },
     REMOVE_USER(state){
       state.user = {};
+    },
     SET_ACCOUNTS(state, payload){
       state.accounts = payload;
     }

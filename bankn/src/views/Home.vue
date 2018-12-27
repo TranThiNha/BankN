@@ -276,8 +276,10 @@ export default {
         {
             headers:{
                  "x-access-token": this.$store.state.user.access_token,
-                 "id": 2
+                 "id": this.$store.state.user.id
             }
+        }).then(response => {
+          alert(JSON.stringify(response));
         })
   },
   computed: {
