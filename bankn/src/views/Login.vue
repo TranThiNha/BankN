@@ -48,6 +48,7 @@
 // @ is an alias to /src
 // import VueRecaptcha from "vue-recaptcha";
 import axios from "axios";
+import { mapActions } from "vuex";
 
 export default {
   name: "home",
@@ -72,23 +73,17 @@ export default {
           .post(`http://192.168.0.116:3000/auth`, this.dataLogin)
           .then(response => {
             alert(JSON.stringify(response));
-            // if (response.data.auth) {
-            //   this.auth = response.data.auth;
-            //   this.access_token = response.data.access_token;
-            //   this.refresh_token = response.data.refresh_token;
-            //   this.$localStorage.set(
-            //     "access_token",
-            //     response.data.access_token
-            //   );
-            //   this.$localStorage.set(
-            //     "refresh_token",
-            //     response.data.refresh_token
-            //   );
-            //   this.$router.replace({ name: "FormInformation" });
-            // }
-            // else {
-            //   $("#modal").fadeIn("fast");
-            // }
+            if (response.data.auth == 1){
+              var info = {
+                role: response.data.role,
+                access_token: response.data.access_token,
+                refresh_token: response.data.refresh_token
+              };
+              this.$store.dispatch("login", info);
+              this.$router.replace("/home");
+            } else{
+
+            }
           })
           .catch(err => {
             alert(err);
