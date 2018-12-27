@@ -6,12 +6,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    accounts: [],
   },
   mutations: {
     SET_USER(state, payload){
-      JSON.stringify(payload);
       state.user = payload;
+    },
+    SET_ACCOUNTS(state, payload){
+      state.accounts = payload;
     }
   },
   actions

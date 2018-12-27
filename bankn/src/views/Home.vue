@@ -1,115 +1,177 @@
 <template>
   <div>
-    
     <!--Add Rep Modal-->
-    <div id="add-rep-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
-        <div class="modal" role="dialog" style="display: block;">
-            <div class="modal-dialog" role="document" style="width: 400px;">
-                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
-                    <div class="modal-title">
-                        Thêm người nhận
-                    </div>
-                    <div class="modal-des">
-                        Thêm người nhận để dễ dàng chuyển khoản
-                    </div>
-                    <div style="margin: 20px 0px 10px 0px">
-                        <label class="input-normal-label">Số tài khoản</label>
-                        <input type="number" class="input-normal" style="width: 100%" placeholder="Nhập số tài khoản">
-                    </div>
-                    <div style="margin-bottom: 30px;">
-                        <label class="input-normal-label">Tên gợi nhớ</label>
-                        <input type="text" class="input-normal" style="width: 100%" placeholder="Nhập tên gợi nhớ">
-                    </div>
-                    <div style="text-align: center; padding-left: 0px;">
-                        <button id="add-rep-neg" class="button-med neg button-modal" style="width: 324px; float: left" v-on:click="CancelAddContact()">Hủy</button>
-                        <button id="add-rep-pos" class="button-med button-modal" style="width: 324px; float: right">Thêm</button>
-                    </div>
-                </div>
+    <div
+      id="add-rep-modal"
+      class="modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div class="modal-title">Thêm người nhận</div>
+            <div class="modal-des">Thêm người nhận để dễ dàng chuyển khoản</div>
+            <div style="margin: 20px 0px 10px 0px">
+              <label class="input-normal-label">Số tài khoản</label>
+              <input
+                type="number"
+                class="input-normal"
+                style="width: 100%"
+                placeholder="Nhập số tài khoản"
+              >
             </div>
+            <div style="margin-bottom: 30px;">
+              <label class="input-normal-label">Tên gợi nhớ</label>
+              <input
+                type="text"
+                class="input-normal"
+                style="width: 100%"
+                placeholder="Nhập tên gợi nhớ"
+              >
+            </div>
+            <div style="text-align: center; padding-left: 0px;">
+              <button
+                id="add-rep-neg"
+                class="button-med neg button-modal"
+                style="width: 324px; float: left"
+                v-on:click="CancelAddContact()"
+              >Hủy</button>
+              <button
+                id="add-rep-pos"
+                class="button-med button-modal"
+                style="width: 324px; float: right"
+              >Thêm</button>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <!--Min Modal-->
-    <div id="min-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
-        <div class="modal" role="dialog" style="display: block;">
-            <div class="modal-dialog" role="document" style="width: 400px;">
-                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
-                    <div class="modal-title">
-                        Thông báo
-                    </div>
-                    <div class="modal-notif">
-                        Quý khách phải duy trì ít nhất một tài-khoản-thanh-toán trong tài khoản.
-                    </div>
-                    <div style="text-align: center;">
-                        <button id="min-close" class="button-med bn-close button-modal" style="width: 324px;">ĐÓNG</button>
-                    </div>
-                </div>
+    <div
+      id="min-modal"
+      class="modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div class="modal-title">Thông báo</div>
+            <div
+              class="modal-notif"
+            >Quý khách phải duy trì ít nhất một tài-khoản-thanh-toán trong tài khoản.</div>
+            <div style="text-align: center;">
+              <button
+                id="min-close"
+                class="button-med bn-close button-modal"
+                style="width: 324px;"
+              >ĐÓNG</button>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <!--Empty Modal-->
-    <div id="empty-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
-        <div class="modal" role="dialog" style="display: block;">
-            <div class="modal-dialog" role="document" style="width: 400px;">
-                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
-                    <div class="modal-title">
-                        Thông báo
-                    </div>
-                    <div class="modal-notif">
-                        Tài-khoản-thanh-toán này vẫn còn tiền. Hãy chuyển hết tiền sang tài-khoản-thanh-toán khác để
-                        giữ lại số tiền của mình.
-                    </div>
-                    <div style="text-align: center;">
-                        <button id="empty-close" class="button-med bn-close button-modal" style="width: 324px;">ĐÓNG</button>
-                    </div>
-                </div>
+    <div
+      id="empty-modal"
+      class="modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div class="modal-title">Thông báo</div>
+            <div class="modal-notif">
+              Tài-khoản-thanh-toán này vẫn còn tiền. Hãy chuyển hết tiền sang tài-khoản-thanh-toán khác để
+              giữ lại số tiền của mình.
             </div>
+            <div style="text-align: center;">
+              <button
+                id="empty-close"
+                class="button-med bn-close button-modal"
+                style="width: 324px;"
+              >ĐÓNG</button>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <!--Card Remove Modal-->
-    <div id="cremove-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
-        <div class="modal" role="dialog" style="display: block;">
-            <div class="modal-dialog" role="document" style="width: 400px;">
-                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
-                    <div class="modal-title">
-                        Đóng tài-khoản
-                    </div>
-                    <div class="modal-notif">
-                        Bạn có chắc chắn muốn đóng tài-khoản-thanh-toán ngày không?
-                    </div>
-                    <div style="text-align: center; padding-left: 0px;">
-                        <button id="cremove-neg" class="button-med neg button-modal" style="width: 324px; float: left">Hủy</button>
-                        <button id="cremove-pos" class="button-med button-modal" style="width: 324px; float: right">Xác
-                            nhận</button>
-                    </div>
-                </div>
+    <div
+      id="cremove-modal"
+      class="modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div class="modal-title">Đóng tài-khoản</div>
+            <div class="modal-notif">Bạn có chắc chắn muốn đóng tài-khoản-thanh-toán ngày không?</div>
+            <div style="text-align: center; padding-left: 0px;">
+              <button
+                id="cremove-neg"
+                class="button-med neg button-modal"
+                style="width: 324px; float: left"
+              >Hủy</button>
+              <button
+                id="cremove-pos"
+                class="button-med button-modal"
+                style="width: 324px; float: right"
+              >
+                Xác
+                nhận
+              </button>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <!--Sign Out Modal-->
-    <div id="sout-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
-        <div class="modal" role="dialog" style="display: block;">
-            <div class="modal-dialog" role="document" style="width: 400px;">
-                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
-                    <div class="modal-title">
-                        Đăng xuất
-                    </div>
-                    <div class="modal-notif">
-                        Bạn muốn đăng xuất?
-                    </div>
-                    <div style="text-align: center; padding-left: 0px;">
-                        <button id="sout-neg" class="button-med neg button-modal" style="width: 324px; float: left">Hủy</button>
-                        <button id="sout-pos" class="button-med button-modal" style="width: 324px; float: right">Đăng xuất</button>
-                    </div>
-                </div>
+    <div
+      id="sout-modal"
+      class="modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div class="modal-title">Đăng xuất</div>
+            <div class="modal-notif">Bạn muốn đăng xuất?</div>
+            <div style="text-align: center; padding-left: 0px;">
+              <button
+                id="sout-neg"
+                class="button-med neg button-modal"
+                style="width: 324px; float: left"
+              >Hủy</button>
+              <button
+                id="sout-pos"
+                class="button-med button-modal"
+                style="width: 324px; float: right"
+              >Đăng xuất</button>
             </div>
+          </div>
         </div>
+      </div>
     </div>
     <div style="position: fixed; width: 100%; z-index: 15;">
-
       <div class="tab-bar" style="width: 100%;">
         <div class="container">
           <div class="row tab-group">
@@ -134,8 +196,9 @@
         <div class="page-title" style="width: 100%; text-align: center">Danh sách thẻ của bạn</div>
         <div class="container" style="padding: 0px 100px">
           <div class="card-container">
-            <Card/>
-            <Card/>
+            <div v-for="(account, id) in accounts" :key="id">
+              <Card/>
+            </div>
           </div>
         </div>
       </div>
@@ -222,7 +285,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -230,6 +292,7 @@
 // @ is an alias to /src
 import Card from "@/components/Card.vue";
 import Contact from "@/components/Contact.vue";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "home",
@@ -237,9 +300,17 @@ export default {
     Card,
     Contact
   },
+  computed: {
+    ...mapState(["accounts"]),
+  },
+  created() {
+    this.$store.dispatch("updateAccounts", this.$store.state.user);
+  },
   methods: {
     ChangeTab() {
-      var id = this.$jQuery(event.target).attr("id").replace("-tab", "");
+      var id = this.$jQuery(event.target)
+        .attr("id")
+        .replace("-tab", "");
       this.$jQuery(".tab").removeClass("tab-in");
       this.$jQuery(".tab").addClass("tab-out");
       this.$jQuery(event.target).addClass("tab-in");
@@ -253,13 +324,13 @@ export default {
     ReceiveContact() {
       this.ChangeTab();
     },
-    TransactionHistory(){
+    TransactionHistory() {
       this.ChangeTab();
     },
-    AddContactReceive(){
+    AddContactReceive() {
       this.$jQuery("#add-rep-modal").show();
     },
-    CancelAddContact(){
+    CancelAddContact() {
       this.$jQuery("#add-rep-modal").fadeOut();
     }
   }
