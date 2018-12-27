@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import InternalTransfer from './views/InternalTransfer.vue'
+import General from './views/General.vue'
 
 Vue.use(Router)
 
@@ -11,14 +11,26 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'General',
+      component: General,
     },
     {
-      path: '/internal-transfer',
-      name: 'InternalTransfer',
-      component: InternalTransfer
+      path: '/bankN',
+      component: General,
+      children: [
+        {
+          path: '/',
+          name: 'home',
+          component: Home
+        },
+        {
+          path: '/transfer',
+          name: 'Transfer',
+          component: Transfer
+        },
+      ]
     },
+   
     {
       path: '/about',
       name: 'about',
