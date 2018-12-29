@@ -1,88 +1,27 @@
 <template>
   <div>
-    <!--Add Acc Modal-->
-    <div
-      id="add-acc-modal"
-      class="modal-backdrop"
-      style="background-color: rgba(0,0,0,0.5); display: none;"
-    >
-      <div class="modal" role="dialog" style="display: block;">
-        <div class="modal-dialog" role="document" style="width: 400px;">
-          <div
-            class="modal-content modal-style"
-            style="border: none !important; border-radius: 10px;"
-          >
-            <div class="modal-title">Tạo tài khoản</div>
-            <div class="modal-des">Nhập các thông tin cần thiết</div>
-            <div style="margin: 20px 0px 10px 0px">
-              <label class="input-normal-label">Tên đăng nhập</label>
-              <input
-                type="text"
-                class="input-normal"
-                style="width: 100%"
-                placeholder="Nhập tên đăng nhập" v-model="dataUser.username"
-              >
-            </div>
-            <div style="margin-bottom: 10px;">
-              <label class="input-normal-label">Mật khẩu</label>
-              <input
-                type="text"
-                class="input-normal"
-                style="width: 100%"
-                placeholder="Nhập mật khẩu" v-model="dataUser.password"
-              >
-            </div>
-            <div style="margin-bottom: 10px;">
-              <label class="input-normal-label">Họ tên</label>
-              <input type="text" class="input-normal" style="width: 100%" placeholder="Nhập họ tên" v-model="dataUser.fullname">
-            </div>
-            <div style="margin-bottom: 10px;">
-              <label class="input-normal-label">Email</label>
-              <input type="text" class="input-normal" style="width: 100%" placeholder="Nhập email" v-model="dataUser.email">
-            </div>
-            <div style="margin-bottom: 30px;">
-              <label class="input-normal-label">Số điện thoại</label>
-              <input
-                type="number"
-                class="input-normal"
-                style="width: 100%"
-                placeholder="Nhập số điện thoại" v-model="dataUser.phone"
-              >
-            </div>
-            <div style="text-align: center; padding-left: 0px;">
-              <button
-                id="add-acc-neg"
-                class="button-med neg button-modal"
-                style="width: 324px; float: left"
-                @click="CancelAddUser()"
-              >Hủy</button>
-              <button
-                id="add-acc-pos"
-                class="button-med button-modal"
-                style="width: 324px; float: right"
-                @click="AcceptAddUser(user)"
-              >Tạo</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div id="page-content" class="container" style="padding-top: 15px;">
+    <div id="page-content" class="container">
       <div id="cards" style="display: block;">
-        <div class="page-title" style="width: 100%; margin-bottom: 70px;">
-          Danh sách tài khoản
+        <div class="page-title" style="width: 100%; margin-bottom: 35px;">
+          <span class="home-dir">
+            <router-link to="/staff-home">Trang chủ</router-link>
+          </span>
+          Tài khoản {{fullname}}
           <button
             id="add-acc-btn"
             class="button-small"
             style="float: right"
-            @click="AddUser()"
-          >Thêm</button>
+          >TẠO THẺ</button>
         </div>
-        <div class="container">
-          <div class="acc-container">
-            <div v-for="user in allAccounts" :key="user">
-              <Contact :nameSug="user.fullname" :account="null"/>
+        <div class="container" style="padding: 0px 100px">
+          <div class="card-container">
+            <div v-for="account in accounts" :key="account.id">
+              <Card
+                :accountNumber="account.accountNumber"
+                :balance="account.balance"
+                :type="'add'"
+              />
             </div>
           </div>
         </div>
@@ -92,59 +31,37 @@
 </template>
 
 <script>
-import Contact from "@/components/Contact.vue";
-import { mapState, mapActions } from "vuex";
 import axios from "axios";
+import { mapState } from "vuex";
+import Card from "@/components/Card.vue";
 
 export default {
   data() {
     return {
-        dataUser: {}
+      fullname: ""
     };
   },
   components: {
-    Contact
+    Card
   },
   computed: {
-    ...mapState(["allAccounts"]),
-    ...mapState(["user"])
+    ...mapState(["accounts"])
   },
   created() {
+    var id = this.$route.params.id;
     axios
-      .get("http://192.168.0.35:3000/users", {
+      .get(`http://192.168.0.35:3000/accounts/${id}`, {
         headers: {
-          "x-access-token": this.$store.state.user.access_token,
+          "x-access-token": this.$store.state.user.access_token
         }
       })
       .then(response => {
-        alert(JSON.stringify(response));
-        this.$store.dispatch("SetAllAccount", response.data.accounts);
+        // alert(JSON.stringify(response));
+        if (response.data.msg == "success!") {
+          this.fullname = response.data.user.fullname;
+          this.$store.dispatch("SetListAccount", response.data.accounts);
+        }
       });
   },
-  methods: {
-    AddUser() {
-      this.$jQuery("#add-acc-modal").show();
-    },
-    CancelAddUser() {
-      this.$jQuery("#add-acc-modal").fadeOut();
-    },
-    AcceptAddUser(user) {
-      axios
-        .post("http://192.168.0.35:3000/users", this.dataUser, {
-          headers: {
-            "x-access-token": this.$store.state.user.access_token,
-          }
-        })
-        .then(response => {
-          if (response.data.msg == "success!") {
-            this.$jQuery("#add-acc-modal").hide();
-            this.$store.dispatch("UpdateListUser", user);
-          }
-          else{
-            alert("Lỗi");
-          }
-        });
-    }
-  }
 };
 </script>

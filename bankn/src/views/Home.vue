@@ -167,7 +167,7 @@
         <div class="container" style="padding: 0px 100px">
           <div class="card-container">
             <div v-for="account in accounts" :key="account">
-              <Card v-bind:accountNumber="account.accountNumber" v-bind:balance="account.balance"/>
+              <Card :accountNumber="account.accountNumber" :balance="account.balance" :type="'remove'"/>
             </div>
           </div>
         </div>

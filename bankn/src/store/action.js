@@ -39,5 +39,16 @@ export default {
         .then(response => {
           ctx.commit('SET_ALL_USER', response.data.accounts);
         });
+    },
+    UpdateListAccount(ctx, info){
+        axios
+        .get(`http://192.168.0.35:3000/accounts/${info.id}`, {
+          headers: {
+            "x-access-token": info.user.access_token,
+          }
+        })
+        .then(response => {
+            ctx.commit('SET_LIST_ACCOUNT', response.data.accounts);
+        });
     }
 }
