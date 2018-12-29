@@ -45,5 +45,4 @@ $(document).ready(function () {
     $("#fmodal-close").click(function() {
         $("#failure-modal").fadeOut("fast");
     })
-
 })

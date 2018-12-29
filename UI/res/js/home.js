@@ -50,4 +50,12 @@ $(document).ready(function () {
         $("#sout-modal").fadeOut("fast");
     })
 
+    $("#transfer-act").click(function() {
+        $("#transfer-modal").fadeIn("fast");
+    })
+
+    $("#transfer-close").click(function() {
+        $("#transfer-modal").fadeOut("fast");
+    })
+
 })
