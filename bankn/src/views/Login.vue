@@ -17,7 +17,8 @@
                 type="text"
                 class="input-normal"
                 style="width: 100%"
-                placeholder="Nhập tên đăng nhập" v-model="dataLogin.username"
+                placeholder="Nhập tên đăng nhập"
+                v-model="dataLogin.username"
               >
             </div>
             <div style="margin-bottom: 20px;">
@@ -26,16 +27,13 @@
                 type="password"
                 class="input-normal"
                 style="width: 100%"
-                placeholder="Nhập mật khẩu" v-model="dataLogin.password"
+                placeholder="Nhập mật khẩu"
+                v-model="dataLogin.password"
               >
             </div>
             <!-- <vue-recaptcha @verify="onVerify" sitekey="6LewKIUUAAAAAP1n2vt257R034CUmGSlsHNsJFaU"></vue-recaptcha> -->
             <div style="margin-top: 30px">
-              <button
-                type="submit"
-                class="button-big"
-                style="width: 100%;"
-              >Đăng nhập</button>
+              <button type="submit" class="button-big" style="width: 100%;">Đăng nhập</button>
             </div>
           </form>
         </div>
@@ -55,7 +53,7 @@ export default {
   data() {
     return {
       dataLogin: {}
-    }
+    };
   },
   components: {
     // VueRecaptcha
@@ -69,26 +67,31 @@ export default {
 
       // var passmd5 = md5($("#password").val());
       // this.dataLogin.password = passmd5;
-        axios
-          .post(`http://192.168.0.116:3000/auth`, this.dataLogin)
-          .then(response => {
-            // alert(JSON.stringify(response));
-            if (response.data.auth == 1){
-              var user = {
-                role: response.data.role,
-                access_token: response.data.access_token,
-                refresh_token: response.data.refresh_token,
-                id: response.data.id
-              };
-              this.$store.dispatch("Login", user);
+      axios
+        .post(`http://192.168.0.35:3000/auth`, this.dataLogin)
+        .then(response => {
+          // alert(JSON.stringify(response));
+          if (response.data.auth == 1) {
+            var user = {
+              role: response.data.role,
+              access_token: response.data.access_token,
+              refresh_token: response.data.refresh_token,
+              id: response.data.id
+            };
+            this.$store.dispatch("Login", user);
+            if (user.role == 1) {
               this.$router.replace("/home");
-            } else {
-              alert("Sai");
             }
-          })
-          .catch(err => {
-            alert(err);
-          });
+            else{
+              this.$router.replace("/staff-home");
+            }
+          } else {
+            alert("Sai");
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
     }
   }
 };

@@ -15,10 +15,9 @@ export default {
     },
     UpdateListContact(ctx, user){
         axios
-      .get("http://192.168.0.116:3000/contacts", {
+      .get("http://192.168.0.35:3000/contacts", {
         headers: {
           "x-access-token": user.access_token,
-          id: user.id
         }
       })
       .then(response => {
@@ -26,5 +25,19 @@ export default {
         ctx.commit('SET_LIST_CONTACT', response.data.contacts);
 
       });
+    },
+    SetAllAccount(ctx, users){
+        ctx.commit('SET_ALL_USER', users);
+    },
+    UpdateListUser(ctx, user){
+        axios
+        .get("http://192.168.0.35:3000/users", {
+          headers: {
+            "x-access-token": user.access_token,
+          }
+        })
+        .then(response => {
+          ctx.commit('SET_ALL_USER', response.data.accounts);
+        });
     }
 }

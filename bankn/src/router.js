@@ -5,6 +5,7 @@ import General from './views/General.vue'
 import Transfer from './views/Transfer.vue'
 import Login from './views/Login.vue'
 import InternalTransfer from './components/InternalTransfer.vue'
+import Staff_Accounts from './views/Staff_Accounts.vue'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
               component: InternalTransfer
             }
           ]
+        },
+        {
+          path: '/staff-home',
+          name: 'Staff_Accounts',
+          component: Staff_Accounts
         },
       ]
     },

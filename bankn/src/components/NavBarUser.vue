@@ -9,7 +9,7 @@
             </div>
           </router-link>
           <div class="col-sm-6 text-right">
-            <button id="transfer-act" class="nav-button-hili" v-on:click="Transfer()">CHUYỂN KHOẢN</button>
+            <button v-if="user.role == 1" id="transfer-act" class="nav-button-hili" v-on:click="Transfer()">CHUYỂN KHOẢN</button>
             <button id="sign-out-btn" class="nav-button-nobg" v-on:click="LogOut()">ĐĂNG XUẤT</button>
           </div>
         </div>
@@ -84,8 +84,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "NavBarUser",
+  computed: {
+    ...mapState(["user"])
+  },
   methods: {
     Transfer() {
       this.$jQuery("#type-modal").show();

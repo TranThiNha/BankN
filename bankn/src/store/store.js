@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     user: {},
     accounts: [],
-    contacts: []
+    contacts: [],
+    allAccounts: []
   },
   mutations: {
     SET_USER(state, payload){
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     SET_LIST_CONTACT(state, payload){
       state.contacts = payload
+    },
+    SET_ALL_USER(state, payload){
+      state.allAccounts = payload
     }
   },
   actions

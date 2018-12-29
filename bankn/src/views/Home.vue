@@ -281,10 +281,9 @@ export default {
   },
   created() {
     axios
-      .get("http://192.168.0.116:3000/accounts", {
+      .get("http://192.168.0.35:3000/accounts", {
         headers: {
           "x-access-token": this.$store.state.user.access_token,
-          id: this.$store.state.user.id
         }
       })
       .then(response => {
@@ -310,10 +309,9 @@ export default {
     ReceiveContact() {
       this.ChangeTab();
       axios
-      .get("http://192.168.0.116:3000/contacts", {
+      .get("http://192.168.0.35:3000/contacts", {
         headers: {
           "x-access-token": this.$store.state.user.access_token,
-          id: this.$store.state.user.id
         }
       })
       .then(response => {
@@ -333,10 +331,9 @@ export default {
     AddContact(user){
       // alert(JSON.stringify(this.contact));
       axios
-      .post("http://192.168.0.116:3000/contacts", this.contact, {
+      .post("http://192.168.0.35:3000/contacts", this.contact, {
         headers: {
           "x-access-token": this.$store.state.user.access_token,
-          id: this.$store.state.user.id
         }
       })
       .then(response => {
