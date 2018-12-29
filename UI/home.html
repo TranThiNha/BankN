@@ -43,6 +43,34 @@
         </div>
     </div>
 
+    <!--Transfer Modal-->
+    <div id="transfer-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
+        <div class="modal" role="dialog" style="display: block;">
+            <div class="modal-dialog" role="document" style="width: 400px;">
+                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
+                    <div class="modal-title">
+                        Chọn hình thức
+                    </div>
+                    <div style="margin-top: 25px;">
+                        <div class="transfer-method" style="margin-bottom: 25px;">
+                            <img src="res/icons/exter-transfer.png" class="icon">
+                            <span>Liên ngân hàng</span>
+                            <img src="res/icons/transfer-goto.png" class="goto">
+                        </div>
+                        <div class="transfer-method" style="margin-bottom: 35px;">
+                            <img src="res/icons/inter-transfer.png" class="icon">
+                            <span>Cùng ngân hàng</span>
+                            <img src="res/icons/transfer-goto.png" class="goto">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <button id="transfer-close" class="button-med bn-close button-modal" style="width: 324px;">ĐÓNG</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--Min Modal-->
     <div id="min-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
         <div class="modal" role="dialog" style="display: block;">
@@ -116,7 +144,8 @@
                     </div>
                     <div style="text-align: center; padding-left: 0px;">
                         <button id="sout-neg" class="button-med neg button-modal" style="width: 324px; float: left">Hủy</button>
-                        <button id="sout-pos" class="button-med button-modal" style="width: 324px; float: right">Đăng xuất</button>
+                        <button id="sout-pos" class="button-med button-modal" style="width: 324px; float: right">Đăng
+                            xuất</button>
                     </div>
                 </div>
             </div>

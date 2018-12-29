@@ -10,7 +10,7 @@
     <link href="res/css/transfer.css" rel="stylesheet" type="text/css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
-    <title>Chuyển khoản cùng ngân hàng</title>
+    <title>Chuyển khoản liên ngân hàng</title>
 </head>
 
 <body>
@@ -184,7 +184,7 @@
         <div id="cards" class="tab-content" style="display: block;">
 
             <div class="page-title" style="width: 100%; text-align: center">
-                Chuyển khoản cùng ngân hàng
+                Chuyển khoản liên ngân hàng
             </div>
             <div class="container" style="padding: 0px 100px">
                 <div class="row">
@@ -201,11 +201,22 @@
                                 </select>
                             </div>
                         </div>
-                        <div style="margin-bottom: 20px;">
-                            <label class="input-normal-label">Số tài khoản đích</label>
-                            <div class="input-group" style="width: 100%">
-                                <input type="number" placeholder="Nhập số tài khoản đích" style="width: 95%">
-                                <img id="rep-search-btn" src="res/icons/search.png" style="float: right">
+                        <div class="row" style="margin-bottom: 20px;">
+                            <div class="col-sm-6">
+                                <label class="input-normal-label">Ngân hàng đích</label>
+                                <div>
+                                    <select class="select-custom short">
+                                        <option value="0">VietinBank</option>
+                                        <option value="1">Agribank</option>
+                                        <option value="2">Vietcombank</option>
+                                        <option value="3">Ocean bank</option>
+                                        <option value="4">VP Bank</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="input-normal-label">Số tài khoản đích</label>
+                                <input type="number" class="input-normal no-spin" placeholder="Nhập số tài khoản đích" style="width: 95%">
                             </div>
                         </div>
                         <div style="margin-bottom: 20px;">
