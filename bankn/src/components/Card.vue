@@ -1,11 +1,10 @@
 <template>
-  <div>
+  <div class="parent" id="1">
     <!--Top-up Modal-->
     <div
       id="topup-modal"
       class="modal-backdrop"
-      style="background-color: rgba(0,0,0,0.5); display: none;"
-    >
+      style="background-color: rgba(0,0,0,0.5); display: none;">
       <div class="modal" role="dialog" style="display: block;">
         <div class="modal-dialog" role="document" style="width: 400px;">
           <div
@@ -33,7 +32,7 @@
                 id="topup-pos"
                 class="button-med button-modal"
                 style="width: 324px; float: right"
-                @click="AddMoney(user)"
+                @click="AddMoney(user, accountNumber)"
               >NẠP</button>
             </div>
           </div>
@@ -71,7 +70,8 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      amount: ""
+      amount: "",
+      accNumber: ""
     }
   },
   computed: {
@@ -82,22 +82,26 @@ export default {
     accountNumber: String,
     balance: Number
   },
+  created() {
+    this.accNumber = this.accountNumber;
+  },
   methods: {
     ModalAddMoney() {
-      this.$jQuery("#topup-modal").show();
+      this.$jQuery(event.target).parents(".parent").find(".modal-backdrop").fadeIn("fast");
     },
     CancelAddMoney() {
-      this.$jQuery("#topup-modal").fadeOut();
+      this.$jQuery(event.target).parents(".parent").find(".modal-backdrop").fadeOut("fast");
     },
-    AddMoney(user) {
+    AddMoney(user, accountNumber) {
       var accessinfo = {
         user: user,
         id : this.$route.params.id,
       }; 
       var newAmount = {
-        accountNumber : this.accountNumber,
+        accountNumber : accountNumber,
         amount : this.amount
       };
+      var obj = event.target;
        axios
       .put("http://192.168.0.35:3000/accounts/balance", newAmount, {
         headers: {
@@ -108,7 +112,8 @@ export default {
         // alert(JSON.stringify(response));
         if (response.data.msg == "success!")
         {
-          this.$jQuery("#topup-modal").hide();
+          this.$jQuery(obj).parents(".parent").find(".modal-backdrop").fadeOut("fast");
+
           this.$store.dispatch("UpdateListAccount", accessinfo);
         }
       });

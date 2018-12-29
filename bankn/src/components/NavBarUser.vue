@@ -3,13 +3,20 @@
     <div class="navbar" style="width: 100%; top: 0;">
       <div class="container">
         <div class="row" style="width: 100%; height: 100%;">
-          <router-link to="/home">
-            <div class="col-sm-6">
-              <img src="/icons/logo-white.png">
-            </div>
-          </router-link>
-          <div class="col-sm-6 text-right">
-            <button v-if="user.role == 1" id="transfer-act" class="nav-button-hili" v-on:click="Transfer()">CHUYỂN KHOẢN</button>
+          <div class="col-sm-6">
+            <router-link to="/home">
+              <img v-if="user.role == 1" src="/icons/logo-white.png">
+            </router-link>
+            <router-link to="/staff-home">
+              <img v-if="user.role == 2" src="/staff/icons/logo-white.png">
+            </router-link>
+          </div>
+
+          <div class="col-sm-6 text-right" v-if="user.role == 2">
+            <button id="sign-out-btn" class="nav-button-nobg" v-on:click="LogOut()">ĐĂNG XUẤT</button>
+          </div>
+          <div class="col-sm-6 text-right" v-if="user.role == 1">
+            <button id="transfer-act" class="nav-button-hili" v-on:click="Transfer()">CHUYỂN KHOẢN</button>
             <button id="sign-out-btn" class="nav-button-nobg" v-on:click="LogOut()">ĐĂNG XUẤT</button>
           </div>
         </div>

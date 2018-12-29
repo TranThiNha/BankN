@@ -1,5 +1,33 @@
 <template>
   <div>
+    <!--Success Modal-->
+    <div
+      id="success-modal"
+      class="modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;">
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div style="text-align: center; margin-bottom: 15px;">
+              <img src="/icons/modal-success.png" width="58px">
+            </div>
+            <div class="modal-title">Thành công</div>
+            <div class="modal-des">Thêm người dùng thành công</div>
+            <div style="text-align: center; margin-top: 25px"  @click="CloseAddSucessModal()">
+              <button
+                id="smodal-close"
+                class="button-med bn-close button-modal"
+                style="width: 324px;"
+              >ĐÓNG</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!--Add Acc Modal-->
     <div
       id="add-acc-modal"
@@ -156,10 +184,15 @@ export default {
           if (response.data.msg == "success!") {
             this.$jQuery("#add-acc-modal").hide();
             this.$store.dispatch("UpdateListUser", user);
+             this.$jQuery("#success-modal").show();
           } else {
             alert("Lỗi");
           }
         });
+    },
+    CloseAddSucessModal(){
+      this.dataUser = {};
+      this.$jQuery("#success-modal").hide();
     }
   }
 };
