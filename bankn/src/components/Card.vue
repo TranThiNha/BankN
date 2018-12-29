@@ -4,7 +4,8 @@
     <div
       id="topup-modal"
       class="modal-backdrop"
-      style="background-color: rgba(0,0,0,0.5); display: none;">
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
       <div class="modal" role="dialog" style="display: block;">
         <div class="modal-dialog" role="document" style="width: 400px;">
           <div
@@ -18,7 +19,8 @@
                 type="text"
                 class="input-normal"
                 style="width: 100%"
-                placeholder="Nhập số tiền muốn nạp" v-model="amount"
+                placeholder="Nhập số tiền muốn nạp"
+                v-model="amount"
               >
             </div>
             <div style="text-align: center; padding-left: 0px;">
@@ -50,7 +52,13 @@
           v-if="type == 'add'"
           @click="ModalAddMoney()"
         >
-        <img id="card-remove" src="/icons/delete.png" style="float: right" v-if="type == 'remove'">
+        <img
+          id="card-remove"
+          src="/icons/delete.png"
+          style="float: right"
+          v-if="type == 'remove'"
+          @click="ModalDeleteAccount(accountNumber)"
+        >
       </div>
       <div style="position: absolute; bottom: 0">
         <div class="card-num">{{accountNumber}}</div>
@@ -70,9 +78,8 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      amount: "",
-      accNumber: ""
-    }
+      amount: ""
+    };
   },
   computed: {
     ...mapState(["user"])
@@ -82,42 +89,75 @@ export default {
     accountNumber: String,
     balance: Number
   },
-  created() {
-    this.accNumber = this.accountNumber;
-  },
   methods: {
     ModalAddMoney() {
-      this.$jQuery(event.target).parents(".parent").find(".modal-backdrop").fadeIn("fast");
+      this.$jQuery(event.target)
+        .parents(".parent")
+        .find(".modal-backdrop")
+        .fadeIn("fast");
     },
     CancelAddMoney() {
-      this.$jQuery(event.target).parents(".parent").find(".modal-backdrop").fadeOut("fast");
+      this.$jQuery(event.target)
+        .parents(".parent")
+        .find(".modal-backdrop")
+        .fadeOut("fast");
     },
     AddMoney(user, accountNumber) {
       var accessinfo = {
         user: user,
-        id : this.$route.params.id,
-      }; 
+        id: this.$route.params.id
+      };
       var newAmount = {
-        accountNumber : accountNumber,
-        amount : this.amount
+        accountNumber: accountNumber,
+        amount: this.amount
       };
       var obj = event.target;
-       axios
-      .put("http://192.168.0.35:3000/accounts/balance", newAmount, {
-        headers: {
-          "x-access-token": this.$store.state.user.access_token,
-        }
-      })
-      .then(response => {
-        // alert(JSON.stringify(response));
-        if (response.data.msg == "success!")
-        {
-          this.$jQuery(obj).parents(".parent").find(".modal-backdrop").fadeOut("fast");
+      axios
+        .put("http://192.168.0.35:3000/accounts/balance", newAmount, {
+          headers: {
+            "x-access-token": this.$store.state.user.access_token
+          }
+        })
+        .then(ponse => {
+          // alert(JSON.stringify(ponse));
+          if (ponse.data.msg == "success!") {
+            this.$jQuery(obj)
+              .parents(".parent")
+              .find(".modal-backdrop")
+              .fadeOut("fast");
 
-          this.$store.dispatch("UpdateListAccount", accessinfo);
-        }
-      });
-    }
+            this.$store.dispatch("UpdateListAccount", accessinfo);
+          }
+        });
+    },
+    ModalDeleteAccount(accountNumber) {
+        this.$emit("deleteAccount", accountNumber);
+    },
+   
+    // DeleteAccount(){
+    //   this.$jQuery(event.target)
+    //     .parents(".parent")
+    //     .find("#cremove-modal")
+    //     .fadeOut("fast");
+    //     alert(1);
+    //   axios
+    //     .put(
+    //       "http://192.168.0.35:3000/accounts/remove",
+    //       { accountNumber: accountNumber },
+    //       {
+    //         headers: {
+    //           "x-access-token": this.$store.state.user.access_token
+    //         }
+    //       }
+    //     )
+    //     .then(response => {
+    //       alert(JSON.stringify(response));
+    //       this.$emit("deleteAccount", response.data.granted);
+    //     })
+    //     .catch(err => {
+    //       alert(err);
+    //     });
+    // }
   }
 };
 </script>

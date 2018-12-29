@@ -21,7 +21,6 @@ export default {
         }
       })
       .then(response => {
-        alert(JSON.stringify(response));
         ctx.commit('SET_LIST_CONTACT', response.data.contacts);
 
       });

@@ -20,7 +20,8 @@
                 type="number"
                 class="input-normal"
                 style="width: 100%"
-                placeholder="Nhập số tài khoản" v-model="contact.accountNumber"
+                placeholder="Nhập số tài khoản"
+                v-model="contact.accountNumber"
               >
             </div>
             <div style="margin-bottom: 30px;">
@@ -29,7 +30,8 @@
                 type="text"
                 class="input-normal"
                 style="width: 100%"
-                placeholder="Nhập tên gợi nhớ" v-model="contact.nameSug"
+                placeholder="Nhập tên gợi nhớ"
+                v-model="contact.nameSug"
               >
             </div>
             <div style="text-align: center; padding-left: 0px;">
@@ -42,7 +44,8 @@
               <button
                 id="add-rep-pos"
                 class="button-med button-modal"
-                style="width: 324px; float: right" v-on:click="AddContact(user)"
+                style="width: 324px; float: right"
+                v-on:click="AddContact(user)"
               >Thêm</button>
             </div>
           </div>
@@ -70,7 +73,7 @@
               <button
                 id="min-close"
                 class="button-med bn-close button-modal"
-                style="width: 324px;"
+                style="width: 324px;" @click="CloseMinModal()"
               >ĐÓNG</button>
             </div>
           </div>
@@ -91,13 +94,41 @@
             style="border: none !important; border-radius: 10px;"
           >
             <div class="modal-title">Thông báo</div>
-            <div class="modal-notif">
-              Tài-khoản-thanh-toán này vẫn còn tiền. Hãy chuyển hết tiền sang tài-khoản-thanh-toán khác để
-              giữ lại số tiền của mình.
+            <div class="modal-notif">Tài-khoản-thanh-toán này vẫn còn tiền.
+              <br>Hãy chuyển hết tiền sang tài-khoản-thanh-toán khác để giữ lại số tiền của mình.
             </div>
             <div style="text-align: center;">
               <button
                 id="empty-close"
+                class="button-med bn-close button-modal"
+                style="width: 324px;"
+              >ĐÓNG</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Success Modal-->
+    <div
+      id="success-modal"
+      class="modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div style="text-align: center; margin-bottom: 15px;">
+              <img src="/icons/modal-success.png" width="58px">
+            </div>
+            <div class="modal-title">Thành công</div>
+            <div class="modal-des">Xóa tài khoản thanh toán thành công</div>
+            <div style="text-align: center; margin-top: 25px" @click="CloseSucessModal()">
+              <button
+                id="smodal-close"
                 class="button-med bn-close button-modal"
                 style="width: 324px;"
               >ĐÓNG</button>
@@ -126,11 +157,13 @@
                 id="cremove-neg"
                 class="button-med neg button-modal"
                 style="width: 324px; float: left"
+                @click="CancelDeleteAccount()"
               >Hủy</button>
               <button
                 id="cremove-pos"
                 class="button-med button-modal"
                 style="width: 324px; float: right"
+                @click="DeleteAccount(user)"
               >
                 Xác
                 nhận
@@ -167,7 +200,12 @@
         <div class="container" style="padding: 0px 100px">
           <div class="card-container">
             <div v-for="account in accounts" :key="account">
-              <Card :accountNumber="account.accountNumber" :balance="account.balance" :type="'remove'"/>
+              <Card
+                :accountNumber="account.accountNumber"
+                :balance="account.balance"
+                @deleteAccount="HandleDeleteAccount"
+                :type="'remove'"
+              />
             </div>
           </div>
         </div>
@@ -175,10 +213,7 @@
 
       <!--Reps-->
       <div id="reps" class="tab-content" style="display: none;">
-        <div
-          class="page-title"
-          style="width: 100%; text-align: center"
-        >Danh sách người nhận bạn từng giao dịch</div>
+        <div class="page-title" style="width: 100%; text-align: center">Danh sách người nhận của bạn</div>
         <div class="container">
           <div class="rep-container">
             <div v-for="contact in contacts" :key="contact">
@@ -267,8 +302,9 @@ export default {
   name: "home",
   data() {
     return {
-      contact: {}
-    }
+      contact: {},
+      accountNumber: ""
+    };
   },
   components: {
     Card,
@@ -283,7 +319,7 @@ export default {
     axios
       .get("http://192.168.0.35:3000/accounts", {
         headers: {
-          "x-access-token": this.$store.state.user.access_token,
+          "x-access-token": this.$store.state.user.access_token
         }
       })
       .then(response => {
@@ -309,15 +345,18 @@ export default {
     ReceiveContact() {
       this.ChangeTab();
       axios
-      .get("http://192.168.0.35:3000/contacts", {
-        headers: {
-          "x-access-token": this.$store.state.user.access_token,
-        }
-      })
-      .then(response => {
-        // alert(JSON.stringify(response));
-        this.$store.dispatch("SetListContact", response.data.contacts);
-      });
+        .get("http://192.168.0.35:3000/contacts", {
+          headers: {
+            "x-access-token": this.$store.state.user.access_token
+          }
+        })
+        .then(response => {
+          // alert(JSON.stringify(response));
+          this.$store.dispatch("SetListContact", response.data.contacts);
+        })
+        .catch(err => {
+          alert(err);
+        });
     },
     TransactionHistory() {
       this.ChangeTab();
@@ -328,22 +367,66 @@ export default {
     Cancelcontact() {
       this.$jQuery("#add-rep-modal").fadeOut();
     },
-    AddContact(user){
+    AddContact(user) {
       // alert(JSON.stringify(this.contact));
       axios
-      .post("http://192.168.0.35:3000/contacts", this.contact, {
-        headers: {
-          "x-access-token": this.$store.state.user.access_token,
-        }
-      })
-      .then(response => {
-        // alert(JSON.stringify(response));
-        if (response.data.msg == "success!")
-        {
-          this.$jQuery("#add-rep-modal").hide();
-          this.$store.dispatch("UpdateListContact", user)
-        }
-      });
+        .post("http://192.168.0.35:3000/contacts", this.contact, {
+          headers: {
+            "x-access-token": this.$store.state.user.access_token
+          }
+        })
+        .then(response => {
+          // alert(JSON.stringify(response));
+          if (response.data.msg == "success!") {
+            this.$jQuery("#add-rep-modal").hide();
+            this.$store.dispatch("UpdateListContact", user);
+          }
+        });
+    },
+    HandleDeleteAccount(accountNumber) {
+      this.$jQuery("#cremove-modal").fadeIn("fast");
+      this.accountNumber = accountNumber;
+    },
+    CancelDeleteAccount() {
+      this.$jQuery("#cremove-modal").fadeOut("fast");
+    },
+    DeleteAccount(user) {
+      this.$jQuery("#cremove-modal").fadeOut("fast");
+      axios
+        .put(
+          "http://192.168.0.35:3000/accounts/remove",
+          { accountNumber: this.accountNumber },
+          {
+            headers: {
+              "x-access-token": this.$store.state.user.access_token
+            }
+          }
+        )
+        .then(response => {
+          alert(JSON.stringify(response));
+          if (response.data.granted == 0) {
+            this.$jQuery("#min-modal").show();
+          } else if (response.data.granted == 1) {
+            this.$jQuery("#empty-modal").show();
+          } else if (response.data.granted == 2) {
+            this.$jQuery("#success-modal").show();
+            var accessinfo = {
+              user: user,
+              id: user.id
+            };
+            this.$store.dispatch("UpdateListAccount", accessinfo);
+          } else {
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
+    },
+    CloseSucessModal() {
+      this.$jQuery("#success-modal").hide();
+    },
+    CloseMinModal(){
+      this.$jQuery("#min-modal").hide();
     }
   }
 };

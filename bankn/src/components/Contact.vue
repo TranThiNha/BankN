@@ -26,7 +26,7 @@ export default {
   },
   props: {
     nameSug: String,
-    account: Number
+    account: String
   },
   created() {
     this.letter = this.nameSug.slice(0, 1);

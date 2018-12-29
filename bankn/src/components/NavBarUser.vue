@@ -23,9 +23,9 @@
       </div>
     </div>
 
-    <!-- Choose transfer type -->
+    <!--Transfer Modal-->
     <div
-      id="type-modal"
+      id="transfer-modal"
       class="modal-backdrop"
       style="background-color: rgba(0,0,0,0.5); display: none;"
     >
@@ -36,15 +36,27 @@
             style="border: none !important; border-radius: 10px;"
           >
             <div class="modal-title">Chọn hình thức</div>
-            <div class="modal-des">
-              <router-link to="/internal">Cùng ngân hàng</router-link>
-              <div>Liên ngân hàng</div>
+            <div style="margin-top: 25px;">
+              <div class="transfer-method" style="margin-bottom: 25px;">
+                <router-link to="/exter">
+                  <img src="/icons/exter-transfer.png" class="icon">
+                  <span>Liên ngân hàng</span>
+                  <img src="/icons/transfer-goto.png" class="goto">
+                </router-link>
+              </div>
+              <div class="transfer-method" style="margin-bottom: 35px;">
+                <router-link to="/internal">
+                  <img src="/icons/inter-transfer.png" class="icon">
+                  <span>Cùng ngân hàng</span>
+                  <img src="/icons/transfer-goto.png" class="goto">
+                </router-link>
+              </div>
             </div>
-            <div style="text-align: center; margin-top: 25px">
+            <div style="text-align: center;">
               <button
-                id="modal-close"
-                v-on:click="CloseModal()"
+                id="transfer-close"
                 class="button-med bn-close button-modal"
+                @click="CloseModal()"
                 style="width: 324px;"
               >ĐÓNG</button>
             </div>
@@ -100,10 +112,10 @@ export default {
   },
   methods: {
     Transfer() {
-      this.$jQuery("#type-modal").show();
+      this.$jQuery("#transfer-modal").show();
     },
     CloseModal() {
-      this.$jQuery("#type-modal").fadeOut();
+      this.$jQuery("#transfer-modal").fadeOut();
     },
     LogOut() {
       this.$jQuery("#sout-modal").show();
@@ -118,7 +130,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.$jQuery("#type-modal").hide();
+      this.$jQuery("#transfer-modal").hide();
     }
   }
 };
