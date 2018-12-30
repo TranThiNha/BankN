@@ -6,6 +6,8 @@ var express = require('express'),
 var authCtrl = require('./apiControllers/authCtrl');
 var contactCtrl = require('./apiControllers/contactCtrl');
 var accountCtrl = require('./apiControllers/accountCtrl');
+var userCtrl = require('./apiControllers/userCtrl');
+var transactionCtrl = require('./apiControllers/transactionCtrl');
 
 var verifyAccessToken = require('./repos/authRepo').verifyAccessToken;
 
@@ -15,11 +17,13 @@ app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/auth/', authCtrl);
-app.use('/contact/', verifyAccessToken, contactCtrl);
-app.use('/account/', verifyAccessToken, accountCtrl);
+app.use('/auth', authCtrl);
+app.use('/contacts', verifyAccessToken, contactCtrl);
+app.use('/accounts', verifyAccessToken, accountCtrl);
+app.use('/users', verifyAccessToken, userCtrl);
+app.use('/transactions', verifyAccessToken, transactionCtrl);
 
 var PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`API running on PORT ${PORT}`);
 })

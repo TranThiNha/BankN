@@ -1,7 +1,7 @@
 var db = require('../fn/mysql-db');
 
 exports.loadContactsByUser = user => {
-    var sql = `select * from contacts where user_id = '${user.id}' and enable = 1`;
+    var sql = `select * from contacts where contacts.user_id = ${user.id} and contacts.enable = 1 order by nameSug`;
     return db.load(sql);
 }
 
@@ -11,3 +11,9 @@ exports.addContactByUser = contact => {
     (${contact.id}, ${contact.accountNumber}, '${contact.nameSug}');`;
     return db.insert(sql);
 }
+
+exports.removeContactByUser = contact => {
+    var sql = `update contacts set enable = 0 where user_id = ${contact.user_id} and account = ${contact.accountNumber}`;
+    return db.insert(sql);
+}
+

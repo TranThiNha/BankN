@@ -2,10 +2,26 @@
 
 var db = require('../fn/mysql-db');
 
-exports.login = loginEntity => {
-    var sql = `select * from users where username = '${loginEntity.username}'
-     and password = '${loginEntity.password}'
-     and role = '${loginEntity.role}'`;
-     console.log(sql);
+exports.login = user => {
+    var sql = `select * from users where username = '${user.username}'
+     and password = '${user.password}'`;
+    return db.load(sql);
+}
+
+exports.loadAll = () => {
+    var sql = `select id, fullname from users where role = 1`;
+    return db.load(sql);
+}
+
+exports.loadUserById = (id) => {
+    var sql = `select * from users where id = ${id}`;
+    return db.load(sql);
+}
+
+exports.insert = (user) => {
+    var sql = `INSERT INTO users (username, password, fullname, email, phoneNumber, role)
+    VALUES
+    ('${user.username}', '${user.password}', '${user.fullname}', '${user.email}', '${user.phone}', 1);`;
+    console.log(sql);
     return db.load(sql);
 }

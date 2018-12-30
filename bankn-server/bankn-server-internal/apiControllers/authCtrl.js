@@ -10,26 +10,28 @@ router.post('/', (req, res) => {
     var user = {
         username: req.body.username,
         password: req.body.password,
-        role: req.body.role
     }
     userRepo.login(user).then(rows => {
         if (rows.length > 0) {
             var loginEntity = rows[0];
             var acToken = authRepo.generateAccessToken(loginEntity);
             var rfToken = authRepo.generateRefreshToken();
-
             authRepo.updateRefreshToken(loginEntity.id, rfToken).then(value => {
-                res.json({
+                let object = {
                     auth: 1,
                     access_token: acToken,
-                    refresh_token: rfToken
+                    refresh_token: rfToken,
+                    role: loginEntity.role,
+                    id: loginEntity.id
+                };
+                res.status = 200;
+                res.json(object);
+            })
+                .catch(err => {
+                    console.log('update refresh token: ' + err);
+                    res.status = 500;
+                    res.end('View error log on console');
                 })
-            })
-            .catch(err => {
-                console.log(err);
-                res.status = 500;
-                res.end('View error log on console');
-            })
         } else {
             res.json({
                 auth: 0,
@@ -37,11 +39,11 @@ router.post('/', (req, res) => {
             })
         }
     })
-    .catch(err => {
-        console.log(err);
-        res.status = 500;
-        res.end('View error log on console');
-    })
+        .catch(err => {
+            console.log(err);
+            res.status = 500;
+            res.end('View error log on console');
+        })
 })
 
 router.post('/updateAccessToken', (req, res) => {
