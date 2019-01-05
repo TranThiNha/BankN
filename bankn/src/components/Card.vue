@@ -113,9 +113,9 @@ export default {
       };
       var obj = event.target;
       axios
-        .put("http://192.168.0.35:3000/accounts/balance", newAmount, {
+        .put("http://192.168.1.13:3000/accounts/balance", newAmount, {
           headers: {
-            "x-access-token": this.$store.state.user.access_token
+            "x-access-token": this.$session.get('access_token')
           }
         })
         .then(ponse => {
@@ -142,11 +142,11 @@ export default {
     //     alert(1);
     //   axios
     //     .put(
-    //       "http://192.168.0.35:3000/accounts/remove",
+    //       "http://192.168.1.13:3000/accounts/remove",
     //       { accountNumber: accountNumber },
     //       {
     //         headers: {
-    //           "x-access-token": this.$store.state.user.access_token
+    //           "x-access-token": this.$session.get('access_token')
     //         }
     //       }
     //     )

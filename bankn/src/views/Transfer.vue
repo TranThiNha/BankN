@@ -100,50 +100,6 @@
         </div>
     </div>
 
-    <!--Success Modal-->
-    <div id="success-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
-        <div class="modal" role="dialog" style="display: block;">
-            <div class="modal-dialog" role="document" style="width: 400px;">
-                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
-                    <div style="text-align: center; margin-bottom: 15px;">
-                        <img src="/icons/modal-success.png" width="58px">
-                    </div>
-                    <div class="modal-title">
-                        Thành công
-                    </div>
-                    <div class="modal-des">
-                        Chuyển khoản thành công
-                    </div>
-                    <div style="text-align: center; margin-top: 25px">
-                        <button id="smodal-close" class="button-med bn-close button-modal" style="width: 324px;">ĐÓNG</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Failure Modal-->
-    <div id="failure-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
-        <div class="modal" role="dialog" style="display: block;">
-            <div class="modal-dialog" role="document" style="width: 400px;">
-                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
-                    <div style="text-align: center; margin-bottom: 15px;">
-                        <img src="/icons/modal-failure.png" width="58px">
-                    </div>
-                    <div class="modal-title">
-                        Thất bại
-                    </div>
-                    <div class="modal-des">
-                        Chuyển khoản thất bại
-                    </div>
-                    <div style="text-align: center; margin-top: 25px">
-                        <button id="fmodal-close" class="button-med bn-close button-modal" style="width: 324px;">ĐÓNG</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
      <div id="page-content" class="container" style="padding-top: 80px;">
          <router-view/>
     </div>
@@ -151,7 +107,4 @@
     </div>
 </template>
 
-<script>
-export default {
-}
-</script>
+

@@ -1,32 +1,7 @@
 <template>
   <div>
-    <!--Success Modal-->
-    <div
-      id="success-modal"
-      class="modal-backdrop"
-      style="background-color: rgba(0,0,0,0.5); display: none;">
-      <div class="modal" role="dialog" style="display: block;">
-        <div class="modal-dialog" role="document" style="width: 400px;">
-          <div
-            class="modal-content modal-style"
-            style="border: none !important; border-radius: 10px;"
-          >
-            <div style="text-align: center; margin-bottom: 15px;">
-              <img src="/icons/modal-success.png" width="58px">
-            </div>
-            <div class="modal-title">Thành công</div>
-            <div class="modal-des">Thêm người dùng thành công</div>
-            <div style="text-align: center; margin-top: 25px"  @click="CloseAddSucessModal()">
-              <button
-                id="smodal-close"
-                class="button-med bn-close button-modal"
-                style="width: 324px;"
-              >ĐÓNG</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
+    <Modal v-if="successAdd == true" title="success" notify="Tạo thẻ thất bại!!" />
 
     <!--Add Acc Modal-->
     <div
@@ -138,17 +113,21 @@
 
 <script>
 import Contact from "@/components/Contact.vue";
+import Modal from "@/components/Modal.vue";
+
 import { mapState, mapActions } from "vuex";
 import axios from "axios";
 
 export default {
   data() {
     return {
-      dataUser: {}
+      dataUser: {},
+      successAdd: false
     };
   },
   components: {
-    Contact
+    Contact, 
+    Modal
   },
   computed: {
     ...mapState(["allAccounts"]),
@@ -156,9 +135,9 @@ export default {
   },
   created() {
     axios
-      .get("http://192.168.0.35:3000/users", {
+      .get("http://192.168.1.13:3000/users", {
         headers: {
-          "x-access-token": this.$store.state.user.access_token
+          "x-access-token": this.$session.get('access_token')
         }
       })
       .then(response => {
@@ -175,25 +154,21 @@ export default {
     },
     AcceptAddUser(user) {
       axios
-        .post("http://192.168.0.35:3000/users", this.dataUser, {
+        .post("http://192.168.1.13:3000/users", this.dataUser, {
           headers: {
-            "x-access-token": this.$store.state.user.access_token
+            "x-access-token": this.$session.get('access_token')
           }
         })
         .then(response => {
           if (response.data.msg == "success!") {
             this.$jQuery("#add-acc-modal").hide();
             this.$store.dispatch("UpdateListUser", user);
-             this.$jQuery("#success-modal").show();
+            this.successAdd = true;
           } else {
             alert("Lỗi");
           }
         });
     },
-    CloseAddSucessModal(){
-      this.dataUser = {};
-      this.$jQuery("#success-modal").hide();
-    }
   }
 };
 </script>

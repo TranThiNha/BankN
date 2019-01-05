@@ -14,74 +14,67 @@
           >
             <div class="modal-title">Thêm người nhận</div>
             <div class="modal-des">Thêm người nhận để dễ dàng chuyển khoản</div>
-            <div style="margin: 20px 0px 10px 0px">
-              <label class="input-normal-label">Số tài khoản</label>
-              <input
-                type="number"
-                class="input-normal"
-                style="width: 100%"
-                placeholder="Nhập số tài khoản"
-                v-model="contact.accountNumber"
-              >
-            </div>
-            <div style="margin-bottom: 30px;">
-              <label class="input-normal-label">Tên gợi nhớ</label>
-              <input
-                type="text"
-                class="input-normal"
-                style="width: 100%"
-                placeholder="Nhập tên gợi nhớ"
-                v-model="contact.nameSug"
-              >
-            </div>
-            <div style="text-align: center; padding-left: 0px;">
-              <button
-                id="add-rep-neg"
-                class="button-med neg button-modal"
-                style="width: 324px; float: left"
-                v-on:click="Cancelcontact()"
-              >Hủy</button>
-              <button
-                id="add-rep-pos"
-                class="button-med button-modal"
-                style="width: 324px; float: right"
-                v-on:click="AddContact(user)"
-              >Thêm</button>
-            </div>
+            <form v-on:submit.prevent="AddContact(user)">
+              <div style="margin: 20px 0px 10px 0px">
+                <label class="input-normal-label">Số tài khoản</label>
+                <input
+                  required
+                  type="number"
+                  class="input-normal"
+                  style="width: 100%"
+                  placeholder="Nhập số tài khoản"
+                  v-model="contactadd.accountNumber"
+                >
+              </div>
+              <div style="margin-bottom: 30px;">
+                <label class="input-normal-label">Tên gợi nhớ</label>
+                <input
+                  type="text"
+                  class="input-normal"
+                  style="width: 100%"
+                  placeholder="Nhập tên gợi nhớ"
+                  v-model="contactadd.nameSug"
+                >
+              </div>
+              <div style="text-align: center; padding-left: 0px;">
+                <button
+                  id="add-rep-neg"
+                  class="button-med neg button-modal"
+                  style="width: 324px; float: left"
+                  v-on:click="Cancelcontact()"
+                >Hủy</button>
+                <button
+                  type="submit"
+                  id="add-rep-pos"
+                  class="button-med button-modal"
+                  style="width: 324px; float: right"
+                >Thêm</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
-    <!--Min Modal-->
-    <div
-      id="min-modal"
-      class="modal-backdrop"
-      style="background-color: rgba(0,0,0,0.5); display: none;"
-    >
-      <div class="modal" role="dialog" style="display: block;">
-        <div class="modal-dialog" role="document" style="width: 400px;">
-          <div
-            class="modal-content modal-style"
-            style="border: none !important; border-radius: 10px;"
-          >
-            <div class="modal-title">Thông báo</div>
-            <div
-              class="modal-notif"
-            >Quý khách phải duy trì ít nhất một tài-khoản-thanh-toán trong tài khoản.</div>
-            <div style="text-align: center;">
-              <button
-                id="min-close"
-                class="button-med bn-close button-modal"
-                style="width: 324px;" @click="CloseMinModal()"
-              >ĐÓNG</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Modal
+      v-if="minModal == true"
+      title="notify"
+      notify="Quý khách phải duy trì ít nhất một tài-khoản-thanh-toán trong tài khoản"
+    />
 
-    <!--Empty Modal-->
+    <Modal
+      v-if="successModal == true"
+      title="success"
+      notify="Xóa tài khoản thanh toán thành công"
+    />
+
+    <Modal
+      v-if="failAddContact == true"
+      title="fail"
+      notify="Thêm người nhận không thành công do mã thẻ không đúng"
+    />
+
+    <!-- Empty Modal -->
     <div
       id="empty-modal"
       class="modal-backdrop"
@@ -97,45 +90,52 @@
             <div class="modal-notif">Tài-khoản-thanh-toán này vẫn còn tiền.
               <br>Hãy chuyển hết tiền sang tài-khoản-thanh-toán khác để giữ lại số tiền của mình.
             </div>
-            <div style="text-align: center;">
+            <div style="text-align: center; padding-left: 0px;">
               <button
                 id="empty-close"
-                class="button-med bn-close button-modal"
+                class="button-med neg button-modal"
                 style="width: 324px;"
+                @click="CloseEmptyModal()"
               >ĐÓNG</button>
+              <button
+                id="empty-close"
+                class="button-med btn-success button-modal"
+                style="width: 324px; float: right"
+                @click="OpenAccountModal()"
+              >CHUYỂN TIỀN</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!--Success Modal-->
-    <div
-      id="success-modal"
-      class="modal-backdrop"
-      style="background-color: rgba(0,0,0,0.5); display: none;"
-    >
-      <div class="modal" role="dialog" style="display: block;">
-        <div class="modal-dialog" role="document" style="width: 400px;">
-          <div
-            class="modal-content modal-style"
-            style="border: none !important; border-radius: 10px;"
-          >
-            <div style="text-align: center; margin-bottom: 15px;">
-              <img src="/icons/modal-success.png" width="58px">
+
+    <!--Rep Search Modal-->
+    <div id="rep-search-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
+        <div class="modal" role="dialog" style="display: block;">
+            <div class="modal-dialog" role="document" style="width: 400px;">
+                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
+                    <div class="modal-title">
+                        Chọn thẻ của bạn
+                    </div>
+                    <div class="rep-list">
+                      <div v-for="acc in accounts" :key="acc.id">
+                        <div class="rep-item ver" @click="selected = acc">
+                            <div>
+                                <div class="rep-name">{{acc.accountNumber}}</div>
+                                <div class="rep-num">{{acc.balance}} VNĐ</div>
+                            </div>
+                        </div>
+                        </div>
+                        
+                    </div>
+                    <div style="text-align: center;">
+                        <button id="rep-search-close" @click="CloseRepModal()" class="button-med bn-close button-modal" style="width: 324px;">ĐÓNG</button>
+                        <button class="button-med button-modal" @click="TransferMoney(selected)" style="width: 324px; float:right">XÁC NHẬN</button>
+                    </div>
+                </div>
             </div>
-            <div class="modal-title">Thành công</div>
-            <div class="modal-des">Xóa tài khoản thanh toán thành công</div>
-            <div style="text-align: center; margin-top: 25px" @click="CloseSucessModal()">
-              <button
-                id="smodal-close"
-                class="button-med bn-close button-modal"
-                style="width: 324px;"
-              >ĐÓNG</button>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
 
     <!--Card Remove Modal-->
@@ -151,7 +151,7 @@
             style="border: none !important; border-radius: 10px;"
           >
             <div class="modal-title">Đóng tài-khoản</div>
-            <div class="modal-notif">Bạn có chắc chắn muốn đóng tài-khoản-thanh-toán ngày không?</div>
+            <div class="modal-notif">Bạn có chắc chắn muốn đóng tài-khoản-thanh-toán này không?</div>
             <div style="text-align: center; padding-left: 0px;">
               <button
                 id="cremove-neg"
@@ -199,7 +199,7 @@
         <div class="page-title" style="width: 100%; text-align: center">Danh sách thẻ của bạn</div>
         <div class="container" style="padding: 0px 100px">
           <div class="card-container">
-            <div v-for="account in accounts" :key="account">
+            <div v-for="account in accounts" :key="account.id">
               <Card
                 :accountNumber="account.accountNumber"
                 :balance="account.balance"
@@ -216,13 +216,14 @@
         <div class="page-title" style="width: 100%; text-align: center">Danh sách người nhận của bạn</div>
         <div class="container">
           <div class="rep-container">
-            <div v-for="contact in contacts" :key="contact">
+            <div v-for="contact in contacts" :key="contact.id">
               <Contact :nameSug="contact.nameSug" :account="contact.account"/>
             </div>
           </div>
         </div>
-        <div style="margin-top: 80px; text-align: center" v-on:click="contactReceive()">
+        <div style="margin-top: 80px; text-align: center">
           <button
+            @click="contactReceive()"
             id="add-rep-btn"
             type="submit"
             class="button-med"
@@ -295,6 +296,7 @@
 // @ is an alias to /src
 import Card from "@/components/Card.vue";
 import Contact from "@/components/Contact.vue";
+import Modal from "@/components/Modal.vue";
 import { mapState, mapActions } from "vuex";
 import axios from "axios";
 
@@ -302,13 +304,18 @@ export default {
   name: "home",
   data() {
     return {
-      contact: {},
-      accountNumber: ""
+      contactadd: {},
+      accountNumber: "",
+      minModal: false,
+      successModal: false,
+      failAddContact: false,
+      selected: {}
     };
   },
   components: {
     Card,
-    Contact
+    Contact,
+    Modal
   },
   computed: {
     ...mapState(["accounts"]),
@@ -316,16 +323,9 @@ export default {
     ...mapState(["user"])
   },
   created() {
-    axios
-      .get("http://192.168.0.35:3000/accounts", {
-        headers: {
-          "x-access-token": this.$store.state.user.access_token
-        }
-      })
-      .then(response => {
-        // alert(JSON.stringify(response));
-        this.$store.dispatch("SetListAccount", response.data.accounts);
-      });
+    var a = this.$localStorage.get('access_token');
+        alert(a);
+      this.$store.dispatch("SetListAccount");
   },
   methods: {
     ChangeTab() {
@@ -343,45 +343,68 @@ export default {
       this.ChangeTab();
     },
     ReceiveContact() {
-      this.ChangeTab();
-      axios
-        .get("http://192.168.0.35:3000/contacts", {
-          headers: {
-            "x-access-token": this.$store.state.user.access_token
-          }
-        })
-        .then(response => {
-          // alert(JSON.stringify(response));
-          this.$store.dispatch("SetListContact", response.data.contacts);
-        })
-        .catch(err => {
-          alert(err);
-        });
+       this.ChangeTab();
+      // axios
+      //   .get("http://192.168.1.13:3000/contacts", {
+      //     headers: {
+      //       "x-access-token": this.$session.get('access_token')
+      //     }
+      //   })
+      //   .then(response => {
+      //     // alert("contact" + JSON.stringify(response));
+      //     if (response.status == 200) {
+      //       this.$store.dispatch("SetListContact", response.data.contacts);
+      //     }
+      //   })
+      //   .catch(err => {
+      //     alert(err);
+      //   });
     },
     TransactionHistory() {
       this.ChangeTab();
+      // axios
+      //   .get("http://192.168.1.13:3000/transactions", {
+      //     headers: {
+      //       "x-access-token": this.$session.get('access_token')
+      //     }
+      //   })
+      //   .then(response => {
+      //     alert(JSON.stringify(response));
+      //     if (response.data.status == 200) {
+      //       // this.$store.dispatch("SetListContact", response.data.contacts);
+      //     }
+      //   })
+      //   .catch(err => {
+      //     alert(err);
+      //   });
     },
     contactReceive() {
       this.$jQuery("#add-rep-modal").show();
     },
     Cancelcontact() {
-      this.$jQuery("#add-rep-modal").fadeOut();
+      this.$jQuery("#add-rep-modal").hide();
     },
     AddContact(user) {
       // alert(JSON.stringify(this.contact));
-      axios
-        .post("http://192.168.0.35:3000/contacts", this.contact, {
-          headers: {
-            "x-access-token": this.$store.state.user.access_token
-          }
-        })
-        .then(response => {
-          // alert(JSON.stringify(response));
-          if (response.data.msg == "success!") {
-            this.$jQuery("#add-rep-modal").hide();
-            this.$store.dispatch("UpdateListContact", user);
-          }
-        });
+      // axios
+      //   .post("http://192.168.1.13:3000/contacts", this.contactadd, {
+      //     headers: {
+      //       "x-access-token": this.$session.get('access_token')
+      //     }
+      //   })
+      //   .then(response => {
+      //     // alert(JSON.stringify(response));
+      //     this.$jQuery("#add-rep-modal").hide();
+      //     if (response.data.msg == "success!") {
+      //       this.contactadd = {};
+      //       this.$store.dispatch("UpdateListContact", user);
+      //     } else {
+      //       this.failAddContact = true;
+      //     }
+      //   })
+      //   .catch(err => {
+      //     alert(err);
+      //   });
     },
     HandleDeleteAccount(accountNumber) {
       this.$jQuery("#cremove-modal").fadeIn("fast");
@@ -391,42 +414,50 @@ export default {
       this.$jQuery("#cremove-modal").fadeOut("fast");
     },
     DeleteAccount(user) {
-      this.$jQuery("#cremove-modal").fadeOut("fast");
-      axios
-        .put(
-          "http://192.168.0.35:3000/accounts/remove",
-          { accountNumber: this.accountNumber },
-          {
-            headers: {
-              "x-access-token": this.$store.state.user.access_token
-            }
-          }
-        )
-        .then(response => {
-          alert(JSON.stringify(response));
-          if (response.data.granted == 0) {
-            this.$jQuery("#min-modal").show();
-          } else if (response.data.granted == 1) {
-            this.$jQuery("#empty-modal").show();
-          } else if (response.data.granted == 2) {
-            this.$jQuery("#success-modal").show();
-            var accessinfo = {
-              user: user,
-              id: user.id
-            };
-            this.$store.dispatch("UpdateListAccount", accessinfo);
-          } else {
-          }
-        })
-        .catch(err => {
-          alert(err);
-        });
+      this.$jQuery("#cremove-modal").hide();
+      // axios
+      //   .put(
+      //     "http://192.168.1.13:3000/accounts/remove",
+      //     { accountNumber: this.accountNumber },
+      //     {
+      //       headers: {
+      //         "x-access-token": this.$session.get('access_token')
+      //       }
+      //     }
+      //   )
+      //   .then(response => {
+      //     // alert(JSON.stringify(response));
+      //     if (response.data.granted == 0) {
+      //       this.minModal = true;
+      //     } else if (response.data.granted == 1) {
+      //       this.$jQuery("#empty-modal").fadeIn();
+      //     } else if (response.data.granted == 2) {
+      //       this.successModal = true;
+      //       var accessinfo = {
+      //         user: user,
+      //         id: user.id
+      //       };
+      //       this.$store.dispatch("UpdateListAccount", accessinfo);
+      //     } else {
+      //     }
+      //   })
+      //   .catch(err => {
+      //     alert(err);
+      //   });
     },
-    CloseSucessModal() {
-      this.$jQuery("#success-modal").hide();
+    CloseEmptyModal() {
+      this.$jQuery("#empty-modal").hide();
     },
-    CloseMinModal(){
-      this.$jQuery("#min-modal").hide();
+    OpenAccountModal() {
+      this.$jQuery("#empty-modal").hide();      
+      this.$jQuery("#rep-search-modal").fadeIn("fast");
+    },
+    CloseRepModal(){
+      this.$jQuery("#rep-search-modal").fadeOut("fast");
+    },
+    TransferMoney(selected){
+      alert(JSON.stringify(selected));
+
     }
   }
 };

@@ -3,6 +3,15 @@ import App from './App.vue'
 import router from './router'
 import store from './store/store'
 
+// import VueLocalStorage from 'vue-localstorage'
+// Vue.use(VueLocalStorage)
+
+Vue.use({
+  install: function(Vue, options){
+      Vue.prototype.$localStorage = require('vue-localstorage');
+  }
+})
+
 Vue.config.productionTip = false
 
 import BootstrapVue from 'bootstrap-vue'
