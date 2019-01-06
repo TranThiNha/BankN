@@ -68,7 +68,7 @@ export default {
       // var passmd5 = md5($("#password").val());
       // this.dataLogin.password = passmd5;
       axios
-        .post(`http://192.168.1.13:3000/auth`, this.dataLogin)
+        .post(`http://192.168.0.5:3000/auth`, this.dataLogin)
         .then(response => {
           // alert(JSON.stringify(response));
           if (response.data.auth == 1) {
@@ -78,10 +78,6 @@ export default {
               refresh_token: response.data.refresh_token,
               id: response.data.id
             };
-            // this.$session.start();
-            this.$localStorage.set('access_token', response.data.access_token);
-            this.$localStorage.set('refresh_token', response.data.refresh_token);
-
             this.$store.dispatch("Login", user);
             if (user.role == 1) {
               this.$router.replace("/home");

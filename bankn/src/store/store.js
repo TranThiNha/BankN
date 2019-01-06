@@ -1,15 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import actions from './action.js'
+import persistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
+  plugins: [
+    persistedState()
+  ],
   state: {
     user: {},
     accounts: [],
     contacts: [],
     allAccounts: []
+  },
+  getters: {
+    getUser: state => {
+      return state.user;
+    }
   },
   mutations: {
     SET_USER(state, payload){
@@ -29,4 +38,10 @@ export default new Vuex.Store({
     }
   },
   actions
-})
+
+});
+
+export default store;
+
+
+

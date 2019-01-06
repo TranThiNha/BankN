@@ -12,18 +12,16 @@
               <label class="input-normal-label">Tài khoản nguồn</label>
               <div>
                 <select class="select-custom">
-                  <option value="0">9282 9282 9192</option>
-                  <option value="1">0293 9182 2621</option>
-                  <option value="2">1389 1204 2892</option>
-                  <option value="3">2389 1093 5783</option>
-                  <option value="4">2352 0489 1278</option>
+                  <option v-for="acc in accounts" :key="acc.id">{{acc.accountNumber}}</option>
                 </select>
               </div>
             </div>
             <div style="margin-bottom: 20px;">
               <label class="input-normal-label">Số tài khoản đích</label>
               <div class="input-group" style="width: 100%">
-                <input type="number" placeholder="Nhập số tài khoản đích" style="width: 95%">
+
+                <input v-on:keyup.enter="submit" type="number" placeholder="Nhập số tài khoản đích" style="width: 95%">
+
                 <img id="rep-search-btn" src="/icons/search.png" style="float: right">
               </div>
             </div>
@@ -87,9 +85,7 @@
           </div>
         </div>
         <div style="margin-top: 15px; text-align: center">
-          <button id="otp-veri" type="submit" class="button-med" style="width: 324px;">
-            Chuyển khoản
-          </button>
+          <button id="otp-veri" type="submit" class="button-med" style="width: 324px;">Chuyển khoản</button>
         </div>
       </div>
     </div>
@@ -98,6 +94,7 @@
 
 <script>
 import Modal from "@/components/Modal.vue";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -106,8 +103,16 @@ export default {
       transferFail: false
     };
   },
+  computed: {
+    ...mapState(["accounts"])
+  },
   components: {
     Modal
-  }
+  },
+  methods: {
+    submit(){
+      alert(2);
+    }
+  },
 };
 </script>

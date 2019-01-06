@@ -56,6 +56,61 @@
       </div>
     </div>
 
+    <!--OTP Modal-->
+    <div
+      id="otp-modal"
+      class="modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div class="modal-title">Xác nhận</div>
+            <div class="modal-des">
+              Kiểm tra e-mail để nhận mã OTP để xác nhận thanh toán.
+              <a
+                @click="sendAgain()"
+                id="otp-resend"
+                href="#"
+                class="bn-link"
+              >
+                Gửi lại mã
+                (
+                <span id="otp-time">30</span>).
+              </a>
+            </div>
+            <div style="margin: 20px 0px">
+              <label class="input-normal-label">Mã OTP</label>
+              <input v-model="otp"
+                type="number"
+                class="input-normal"
+                style="width: 100%"
+                placeholder="Nhập mã OTP"
+              >
+            </div>
+            <div style="text-align: center; padding-left: 0px;">
+              <button @click="CancelOTP()"
+                id="otp-neg"
+                class="button-med neg button-modal"
+                style="width: 324px; float: left"
+              >HỦY</button>
+              <button
+                id="otp-pos" @click="sendOTP()"
+                class="button-med button-modal"
+                style="width: 324px; float: right"
+              >
+                XÁC
+                NHẬN
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <Modal
       v-if="minModal == true"
       title="notify"
@@ -109,33 +164,46 @@
       </div>
     </div>
 
-
     <!--Rep Search Modal-->
-    <div id="rep-search-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
-        <div class="modal" role="dialog" style="display: block;">
-            <div class="modal-dialog" role="document" style="width: 400px;">
-                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
-                    <div class="modal-title">
-                        Chọn thẻ của bạn
-                    </div>
-                    <div class="rep-list">
-                      <div v-for="acc in accounts" :key="acc.id">
-                        <div class="rep-item ver" @click="selected = acc">
-                            <div>
-                                <div class="rep-name">{{acc.accountNumber}}</div>
-                                <div class="rep-num">{{acc.balance}} VNĐ</div>
-                            </div>
-                        </div>
-                        </div>
-                        
-                    </div>
-                    <div style="text-align: center;">
-                        <button id="rep-search-close" @click="CloseRepModal()" class="button-med bn-close button-modal" style="width: 324px;">ĐÓNG</button>
-                        <button class="button-med button-modal" @click="TransferMoney(selected)" style="width: 324px; float:right">XÁC NHẬN</button>
-                    </div>
+    <div
+      id="rep-search-modal"
+      class="modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div class="modal-title">Chọn thẻ của bạn</div>
+            <div class="rep-list">
+              <div v-for="acc in accounts" :key="acc.id">
+                <div class="rep-item ver" @click="selected = acc">
+                  <div>
+                    <div class="rep-name">{{acc.accountNumber}}</div>
+                    <div class="rep-num">{{acc.balance}} VNĐ</div>
+                  </div>
                 </div>
+              </div>
+              <div v-if="hasSelected == true" style="color: red">Hãy chọn 1 tài khoản!</div>
             </div>
+            <div style="text-align: center;">
+              <button
+                id="rep-search-close"
+                @click="CloseRepModal()"
+                class="button-med bn-close button-modal"
+                style="width: 324px;"
+              >ĐÓNG</button>
+              <button
+                class="button-med button-modal"
+                @click="TransferMoney(selected)"
+                style="width: 324px; float:right"
+              >XÁC NHẬN</button>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <!--Card Remove Modal-->
@@ -163,7 +231,7 @@
                 id="cremove-pos"
                 class="button-med button-modal"
                 style="width: 324px; float: right"
-                @click="DeleteAccount(user)"
+                @click="DeleteAccount()"
               >
                 Xác
                 nhận
@@ -306,10 +374,13 @@ export default {
     return {
       contactadd: {},
       accountNumber: "",
+      balance: "",
       minModal: false,
       successModal: false,
       failAddContact: false,
-      selected: {}
+      selected: null,
+      hasSelected: false,
+      otp: ""
     };
   },
   components: {
@@ -323,9 +394,7 @@ export default {
     ...mapState(["user"])
   },
   created() {
-    var a = this.$localStorage.get('access_token');
-        alert(a);
-      this.$store.dispatch("SetListAccount");
+    this.$store.dispatch("SetListAccount");
   },
   methods: {
     ChangeTab() {
@@ -343,40 +412,12 @@ export default {
       this.ChangeTab();
     },
     ReceiveContact() {
-       this.ChangeTab();
-      // axios
-      //   .get("http://192.168.1.13:3000/contacts", {
-      //     headers: {
-      //       "x-access-token": this.$session.get('access_token')
-      //     }
-      //   })
-      //   .then(response => {
-      //     // alert("contact" + JSON.stringify(response));
-      //     if (response.status == 200) {
-      //       this.$store.dispatch("SetListContact", response.data.contacts);
-      //     }
-      //   })
-      //   .catch(err => {
-      //     alert(err);
-      //   });
+      this.ChangeTab();
+      this.$store.dispatch("SetListContact");
     },
     TransactionHistory() {
       this.ChangeTab();
-      // axios
-      //   .get("http://192.168.1.13:3000/transactions", {
-      //     headers: {
-      //       "x-access-token": this.$session.get('access_token')
-      //     }
-      //   })
-      //   .then(response => {
-      //     alert(JSON.stringify(response));
-      //     if (response.data.status == 200) {
-      //       // this.$store.dispatch("SetListContact", response.data.contacts);
-      //     }
-      //   })
-      //   .catch(err => {
-      //     alert(err);
-      //   });
+      this.$store.dispatch("SetTransactionHistory");
     },
     contactReceive() {
       this.$jQuery("#add-rep-modal").show();
@@ -385,79 +426,169 @@ export default {
       this.$jQuery("#add-rep-modal").hide();
     },
     AddContact(user) {
-      // alert(JSON.stringify(this.contact));
-      // axios
-      //   .post("http://192.168.1.13:3000/contacts", this.contactadd, {
-      //     headers: {
-      //       "x-access-token": this.$session.get('access_token')
-      //     }
-      //   })
-      //   .then(response => {
-      //     // alert(JSON.stringify(response));
-      //     this.$jQuery("#add-rep-modal").hide();
-      //     if (response.data.msg == "success!") {
-      //       this.contactadd = {};
-      //       this.$store.dispatch("UpdateListContact", user);
-      //     } else {
-      //       this.failAddContact = true;
-      //     }
-      //   })
-      //   .catch(err => {
-      //     alert(err);
-      //   });
+      axios
+        .post("http://192.168.0.5:3000/contacts", this.contactadd, {
+          headers: {
+            "x-access-token": this.$session.state.user.access_token
+          }
+        })
+        .then(response => {
+          // alert(JSON.stringify(response));
+          this.$jQuery("#add-rep-modal").hide();
+          if (response.data.msg == "success!") {
+            this.contactadd = {};
+            this.$store.dispatch("UpdateListContact");
+          } else {
+            this.failAddContact = true;
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
     },
-    HandleDeleteAccount(accountNumber) {
+    HandleDeleteAccount(accountNumber, balance) {
       this.$jQuery("#cremove-modal").fadeIn("fast");
       this.accountNumber = accountNumber;
+      this.balance = balance;
     },
     CancelDeleteAccount() {
       this.$jQuery("#cremove-modal").fadeOut("fast");
     },
-    DeleteAccount(user) {
+    DeleteAccount() {
       this.$jQuery("#cremove-modal").hide();
-      // axios
-      //   .put(
-      //     "http://192.168.1.13:3000/accounts/remove",
-      //     { accountNumber: this.accountNumber },
-      //     {
-      //       headers: {
-      //         "x-access-token": this.$session.get('access_token')
-      //       }
-      //     }
-      //   )
-      //   .then(response => {
-      //     // alert(JSON.stringify(response));
-      //     if (response.data.granted == 0) {
-      //       this.minModal = true;
-      //     } else if (response.data.granted == 1) {
-      //       this.$jQuery("#empty-modal").fadeIn();
-      //     } else if (response.data.granted == 2) {
-      //       this.successModal = true;
-      //       var accessinfo = {
-      //         user: user,
-      //         id: user.id
-      //       };
-      //       this.$store.dispatch("UpdateListAccount", accessinfo);
-      //     } else {
-      //     }
-      //   })
-      //   .catch(err => {
-      //     alert(err);
-      //   });
+      axios
+        .put(
+          "http://192.168.0.5:3000/accounts/remove",
+          { accountNumber: this.accountNumber },
+          {
+            headers: {
+              "x-access-token": this.$store.state.user.access_token
+            }
+          }
+        )
+        .then(response => {
+          alert(JSON.stringify(response));
+          if (response.data.granted == 0) {
+            this.minModal = true;
+          } else if (response.data.granted == 1) {
+            this.$jQuery("#empty-modal").fadeIn();
+          } else if (response.data.granted == 2) {
+            this.successModal = true;
+            this.$store.dispatch("UpdateListAccount");
+          } else {
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
     },
     CloseEmptyModal() {
       this.$jQuery("#empty-modal").hide();
     },
     OpenAccountModal() {
-      this.$jQuery("#empty-modal").hide();      
+      this.$jQuery("#empty-modal").hide();
       this.$jQuery("#rep-search-modal").fadeIn("fast");
     },
-    CloseRepModal(){
+    CloseRepModal() {
       this.$jQuery("#rep-search-modal").fadeOut("fast");
     },
-    TransferMoney(selected){
+    TransferMoney(selected) {
       alert(JSON.stringify(selected));
+      if (selected == null) {
+        this.hasSelected = true;
+      } else {
+        axios
+          .get("http://192.168.0.5:3000/transactions/otp", {
+            headers: {
+              "x-access-token": this.$store.state.user.access_token
+            }
+          })
+          .then(response => {
+            // alert(JSON.stringify(response));
+            if (response.data.msg == "success") {
+              this.$jQuery("#rep-search-modal").hide();
+              this.$jQuery("#otp-modal").fadeIn();
+            }
+          })
+          .catch(err => {
+            alert(err);
+          });
 
+      }
+    },
+    sendAgain() {
+      var counter = 30;
+      var self = this;
+      axios
+        .get("http://192.168.0.5:3000/transactions/otp", {
+          headers: {
+            "x-access-token": this.$store.state.user.access_token
+          }
+        })
+        .then(response => {
+        })
+        .catch(err => {
+          alert(err);
+        });
+      var interval = setInterval(function() {
+        counter--;
+        if (counter >= 0) {
+          self.$jQuery("#otp-time").html(counter);
+          self.$jQuery("#otp-resend").css("pointer-events", "none");
+        }
+        if (counter === 0) {
+          self.$jQuery("#otp-resend").css("pointer-events", "auto");
+          self.$jQuery("#otp-time").html(30);
+          clearInterval(counter);
+        }
+      }, 1000);
+    },
+    CancelOTP(){
+      this.$jQuery("#otp-modal").hide();
+    },
+    sendOTP(){
+       axios
+        .post("http://192.168.0.5:3000/transactions/otp", this.otp, {
+          headers: {
+            "x-access-token": this.$store.state.user.access_token
+          }
+        })
+        .then(response => {
+          alert(JSON.stringify(response));
+          if (response.status == 200){
+            this.TransactionInternal();
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
+    },
+    TransactionInternal(){
+        axios
+          .post("http://192.168.0.5:3000/transactions/internal",
+          {
+            sendAccount: this.accountNumber,
+            receiAccount: this.selected.accountNumber,
+            amount: +this.balance -  1000,
+            description: ""
+          }, {
+            headers: {
+              "x-access-token": this.$store.state.user.access_token
+            }
+          })
+          .then(response => {
+            if (response.data.msg == "success"){
+              this.otp = "";
+              this.$jQuery("#otp-modal").hide();
+              this.DeleteAccount();
+            }
+            else{
+              alert(response.data.msg);
+            }
+          })
+          .catch(err => {
+            alert(err);
+          });
     }
   }
 };
