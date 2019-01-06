@@ -223,7 +223,8 @@ router.post('/internal', (req, res) => {
         description: req.body.description,
         amount: req.body.amount,
         fee: 1000,
-        idbank: 888,
+        idbankfrom: 888,
+        idbankto: 888,
         type: req.body.type
     }
     txRepo.send(transaction).then(row => {
@@ -232,7 +233,6 @@ router.post('/internal', (req, res) => {
             res.json({
                 msg: 'success'
             })
-            
         } else {
             res.json({
                 msg: 'failed'
@@ -268,16 +268,16 @@ router.post('/external', (req, res) => {
             otherBank.loadOtherBankById(transaction.idbank).then(rows => {
                 let bank = rows[0];
                 axios.post('/sendTransaction', {
-                    'accountFrom': {
-                        'id': transaction.sendAccount,
-                        'idbank': 888
+                    accountFrom: {
+                        id: transaction.sendAccount,
+                        idbank: 888
                     },
-                    'accountTo': {
-                        'id': transaction.receiAccount,
-                        'idbank': transaction.idbank
+                    accountTo: {
+                        id: transaction.receiAccount,
+                        idbank: transaction.idbank
                     },
-                    'amount' : transaction.amount,
-                    'address' : bank.address
+                    amount : transaction.amount,
+                    address : bank.address
                 }).then(respone => {
                     console.log(respone);
                 }).catch(err => {

@@ -4,9 +4,10 @@ var axiosInstance = axios.create({
     baseURL: "http://localhost:3001",
     timeout: 10000,
 });
+var txRepo = require('../repos/transactionRepo');
 var checkChangeTransaction = function () {
     return new Promise((resolve, reject) => {
-        axiosInstance.get('/address/' + '042d14e0fb73f3733448967618107fac7ba9bb58094fa2879fca8d918d196a821c22624bbf6c2299b226f7ebdad867c600c7b2e6e35ee79636a9440a4d112ff8f5')
+        axiosInstance.get('/address/' + '045de212ef435d95088f430ab5c8bbf16967121bd7384b5393b09377ddf689194de456edae1993753c7f5cce76c1d5d54f75c61b4796bebcc8236aaf7b97593654')
             .then(function (res) {
                 return res.data;
             })
@@ -46,22 +47,16 @@ function receiveTran() {
 }
 
 function excuteTransaction(amount, accountFrom, accountTo) {
-    // let personReceive = {
-    //     accountid: accountTo.id,
-    //     type: 2,
-    //     date: moment().format("YYYY-MM-DD HH:mm:ss"),
-    //     accountdes: accountFrom.id,
-    //     paymenttype: 1,
-    //     money: amount,
-    //     transfertype: 2,
-    //     id: GenerateID(),
-    //     bankid: accountFrom.idbank,
-    //     fee: config.FEE.OTHER
-    // }
-    // //Luu lich su giao dich
-    // historytransactionRepo
-    //     .addHistory(personReceive)
-    // confirmTran.recharge(accountTo.id, amount)
-    
+    var transaction = {
+        sendAccount: accountFrom.id,
+        receiAccount: accountTo.id,
+        description: "",
+        amount: amount,
+        idbankfrom: accountTo.idbank,
+        idbankto: accountFrom.idbank,
+        fee: 2000,
+        type: 0
+    }
 
+    txRepo.send(transaction);
 }

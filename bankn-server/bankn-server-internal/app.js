@@ -11,6 +11,8 @@ var transactionCtrl = require('./apiControllers/transactionCtrl');
 var minerCtrl = require('./apiControllers/minerCtrl');
 var verifyAccessToken = require('./repos/authRepo').verifyAccessToken;
 var receiTransaction = require('./apiControllers/receiveTransaction');
+var otherBankCtrl = require('./apiControllers/otherBankCtrl');
+
 app = express();
 
 app.use(morgan('dev'));
@@ -18,6 +20,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/auth', authCtrl);
+app.use('/otherbank',verifyAccessToken, otherBankCtrl);
 app.use('/contacts', verifyAccessToken, contactCtrl);
 app.use('/accounts', verifyAccessToken, accountCtrl);
 app.use('/users', verifyAccessToken, userCtrl);

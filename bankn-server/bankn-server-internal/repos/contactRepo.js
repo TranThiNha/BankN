@@ -6,9 +6,9 @@ exports.loadContactsByUser = user => {
 }
 
 exports.addContactByUser = contact => {
-    var sql = `INSERT INTO contacts ( user_id, account, nameSug)
+    var sql = `INSERT INTO contacts ( user_id, enable, account, nameSug)
     VALUES
-    (${contact.id}, ${contact.accountNumber}, '${contact.nameSug}');`;
+    (${contact.id}, 1, ${contact.accountNumber}, '${contact.nameSug}');`;
     return db.insert(sql);
 }
 

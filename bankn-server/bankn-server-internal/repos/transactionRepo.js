@@ -1,7 +1,7 @@
 var db = require('../fn/mysql-db');
 
 exports.send = object => {
-    var sql = `call transfer('${object.sendAccount}', '${object.receiAccount}', ${object.amount}, ${object.type}, ${object.fee}, "${object.description}", ${object.idbank});`;
+    var sql = `call transfer('${object.sendAccount}', '${object.receiAccount}', ${object.amount}, ${object.type}, ${object.fee}, "${object.description}", ${object.idbankfrom}, ${object.idbankto});`;
     console.log(sql);
     return db.load(sql);
 }

@@ -48,11 +48,19 @@ router.get('/:id', (req, res) => {
 })
 
 router.put('/balance', (req, res) => {
-    var account = {
-        accountNumber: req.body.accountNumber,
-        amount: req.body.amount
+
+    var transaction = {
+        sendAccount: "0000000000000000",
+        receiAccount: req.body.accountNumber,
+        description: "",
+        amount: req.body.amount,
+        fee: 0,
+        idbankfrom: 888,
+        idbankto: 888,
+        type: 0
     }
-    accountRepo.addMoney(account).then(() => {
+
+    txRepo.send(transaction).then(() => {
         res.status = 200;
         res.json({
             msg: 'success!'

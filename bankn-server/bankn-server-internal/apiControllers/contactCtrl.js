@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
     if (contactEnity.id != undefined && contactEnity.accountNumber != undefined) {
         accountRepo.findAccountNumber(contactEnity.accountNumber).then(rows => {
             if (rows.length > 0) {
-                if ( contactEnity.nameSug != undefined || contactEnity.nameSug == "") {
+                if (contactEnity.nameSug == undefined || contactEnity.nameSug == "" || contactEnity.nameSug == null) {
                     contactEnity.nameSug = rows[0].full_name;
                 }
                 contactRepo.addContactByUser(contactEnity).then(() => {
