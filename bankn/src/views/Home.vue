@@ -56,60 +56,8 @@
       </div>
     </div>
 
-    <!--OTP Modal-->
-    <div
-      id="otp-modal"
-      class="modal-backdrop"
-      style="background-color: rgba(0,0,0,0.5); display: none;"
-    >
-      <div class="modal" role="dialog" style="display: block;">
-        <div class="modal-dialog" role="document" style="width: 400px;">
-          <div
-            class="modal-content modal-style"
-            style="border: none !important; border-radius: 10px;"
-          >
-            <div class="modal-title">Xác nhận</div>
-            <div class="modal-des">
-              Kiểm tra e-mail để nhận mã OTP để xác nhận thanh toán.
-              <a
-                @click="sendAgain()"
-                id="otp-resend"
-                href="#"
-                class="bn-link"
-              >
-                Gửi lại mã
-                (
-                <span id="otp-time">30</span>).
-              </a>
-            </div>
-            <div style="margin: 20px 0px">
-              <label class="input-normal-label">Mã OTP</label>
-              <input v-model="otp"
-                type="number"
-                class="input-normal"
-                style="width: 100%"
-                placeholder="Nhập mã OTP"
-              >
-            </div>
-            <div style="text-align: center; padding-left: 0px;">
-              <button @click="CancelOTP()"
-                id="otp-neg"
-                class="button-med neg button-modal"
-                style="width: 324px; float: left"
-              >HỦY</button>
-              <button
-                id="otp-pos" @click="sendOTP()"
-                class="button-med button-modal"
-                style="width: 324px; float: right"
-              >
-                XÁC
-                NHẬN
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <OTPModal v-if="getOTP == true" :sendAccount="accountNumber" type="0" typeTransfer="internal"
+     :receiAccount="selected.accountNumber" :amount="balance" description="" @InternalSuccess="HandleInternalSuccess"/>
 
     <Modal
       v-if="minModal == true"
@@ -365,6 +313,8 @@
 import Card from "@/components/Card.vue";
 import Contact from "@/components/Contact.vue";
 import Modal from "@/components/Modal.vue";
+import OTPModal from "@/components/OTPModal.vue";
+
 import { mapState, mapActions } from "vuex";
 import axios from "axios";
 
@@ -380,20 +330,26 @@ export default {
       failAddContact: false,
       selected: null,
       hasSelected: false,
-      otp: ""
+      otpflag: false
     };
   },
   components: {
     Card,
     Contact,
-    Modal
+    Modal,
+    OTPModal
   },
   computed: {
     ...mapState(["accounts"]),
     ...mapState(["contacts"]),
-    ...mapState(["user"])
+    ...mapState(["user"]),
+    getOTP() {
+      return this.$store.state.getOTP;
+    }
+    // ...mapState(["getOTP"])
   },
   created() {
+    this.$store.dispatch("Reset");
     this.$store.dispatch("SetListAccount");
   },
   methods: {
@@ -427,9 +383,9 @@ export default {
     },
     AddContact(user) {
       axios
-        .post("http://192.168.0.5:3000/contacts", this.contactadd, {
+        .post("http://192.168.0.130:3000/contacts", this.contactadd, {
           headers: {
-            "x-access-token": this.$session.state.user.access_token
+            "x-access-token": this.$store.state.user.access_token
           }
         })
         .then(response => {
@@ -458,7 +414,7 @@ export default {
       this.$jQuery("#cremove-modal").hide();
       axios
         .put(
-          "http://192.168.0.5:3000/accounts/remove",
+          "http://192.168.0.130:3000/accounts/remove",
           { accountNumber: this.accountNumber },
           {
             headers: {
@@ -497,98 +453,19 @@ export default {
       if (selected == null) {
         this.hasSelected = true;
       } else {
-        axios
-          .get("http://192.168.0.5:3000/transactions/otp", {
-            headers: {
-              "x-access-token": this.$store.state.user.access_token
-            }
-          })
-          .then(response => {
-            // alert(JSON.stringify(response));
-            if (response.data.msg == "success") {
-              this.$jQuery("#rep-search-modal").hide();
-              this.$jQuery("#otp-modal").fadeIn();
-            }
-          })
-          .catch(err => {
-            alert(err);
-          });
-
+        this.$store.dispatch("GetOTP");
       }
     },
-    sendAgain() {
-      var counter = 30;
-      var self = this;
-      axios
-        .get("http://192.168.0.5:3000/transactions/otp", {
-          headers: {
-            "x-access-token": this.$store.state.user.access_token
-          }
-        })
-        .then(response => {
-        })
-        .catch(err => {
-          alert(err);
-        });
-      var interval = setInterval(function() {
-        counter--;
-        if (counter >= 0) {
-          self.$jQuery("#otp-time").html(counter);
-          self.$jQuery("#otp-resend").css("pointer-events", "none");
-        }
-        if (counter === 0) {
-          self.$jQuery("#otp-resend").css("pointer-events", "auto");
-          self.$jQuery("#otp-time").html(30);
-          clearInterval(counter);
-        }
-      }, 1000);
-    },
-    CancelOTP(){
-      this.$jQuery("#otp-modal").hide();
-    },
-    sendOTP(){
-       axios
-        .post("http://192.168.0.5:3000/transactions/otp", this.otp, {
-          headers: {
-            "x-access-token": this.$store.state.user.access_token
-          }
-        })
-        .then(response => {
-          alert(JSON.stringify(response));
-          if (response.status == 200){
-            this.TransactionInternal();
-          }
-        })
-        .catch(err => {
-          alert(err);
-        });
-    },
-    TransactionInternal(){
-        axios
-          .post("http://192.168.0.5:3000/transactions/internal",
-          {
-            sendAccount: this.accountNumber,
-            receiAccount: this.selected.accountNumber,
-            amount: +this.balance -  1000,
-            description: ""
-          }, {
-            headers: {
-              "x-access-token": this.$store.state.user.access_token
-            }
-          })
-          .then(response => {
-            if (response.data.msg == "success"){
-              this.otp = "";
-              this.$jQuery("#otp-modal").hide();
-              this.DeleteAccount();
-            }
-            else{
-              alert(response.data.msg);
-            }
-          })
-          .catch(err => {
-            alert(err);
-          });
+    HandleInternalSuccess(){
+      this.DeleteAccount();
+    }
+  },
+  watch: {
+    getOTP: function(_new) {
+      if (_new == true) {
+        this.$jQuery("#rep-search-modal").hide();
+      }
+      getOTP = _new;
     }
   }
 };

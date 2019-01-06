@@ -113,7 +113,7 @@ export default {
       };
       var obj = event.target;
       axios
-        .put("http://192.168.0.5:3000/accounts/balance", newAmount, {
+        .put("http://192.168.0.130:3000/accounts/balance", newAmount, {
           headers: {
             "x-access-token": this.$session.get('access_token')
           }
@@ -134,30 +134,7 @@ export default {
         this.$emit("deleteAccount", accountNumber, balance);
     },
    
-    // DeleteAccount(){
-    //   this.$jQuery(event.target)
-    //     .parents(".parent")
-    //     .find("#cremove-modal")
-    //     .fadeOut("fast");
-    //     alert(1);
-    //   axios
-    //     .put(
-    //       "http://192.168.0.5:3000/accounts/remove",
-    //       { accountNumber: accountNumber },
-    //       {
-    //         headers: {
-    //           "x-access-token": this.$session.get('access_token')
-    //         }
-    //       }
-    //     )
-    //     .then(response => {
-    //       alert(JSON.stringify(response));
-    //       this.$emit("deleteAccount", response.data.granted);
-    //     })
-    //     .catch(err => {
-    //       alert(err);
-    //     });
-    // }
+    
   }
 };
 </script>

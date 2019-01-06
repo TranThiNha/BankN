@@ -8,6 +8,7 @@ import InternalTransfer from './components/InternalTransfer.vue'
 import ExterTransfer from './components/ExterTransfer.vue'
 import Staff_Users from './views/Staff_Users.vue'
 import Staff_Accounts from './views/Staff_Accounts.vue'
+import Admin_Home from './views/Admin_Home.vue'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
     {
       path: '/',
       redirect: '/login'
+    },
+    {
+      path: '/admin-home',
+      name: 'Admin_Home',
+      component: Admin_Home
     },
     {
       path: '/bankN',
@@ -58,6 +64,7 @@ export default new Router({
           name: 'Staff_Accounts',
           component: Staff_Accounts
         },
+        
       ]
     },
    

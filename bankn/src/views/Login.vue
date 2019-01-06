@@ -68,7 +68,7 @@ export default {
       // var passmd5 = md5($("#password").val());
       // this.dataLogin.password = passmd5;
       axios
-        .post(`http://192.168.0.5:3000/auth`, this.dataLogin)
+        .post(`http://192.168.0.130:3000/auth`, this.dataLogin)
         .then(response => {
           // alert(JSON.stringify(response));
           if (response.data.auth == 1) {
@@ -82,8 +82,11 @@ export default {
             if (user.role == 1) {
               this.$router.replace("/home");
             }
-            else{
+            else if (user.role == 2){
               this.$router.replace("/staff-home");
+            }
+            else if (user.role == 3){
+              this.$router.replace("/admin-home");
             }
           } else {
             alert("Sai");
