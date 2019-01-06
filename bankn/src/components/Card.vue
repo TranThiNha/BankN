@@ -64,7 +64,7 @@
         <div class="card-num">{{accountNumber}}</div>
         <div class="card-balance">
           Số dư:
-          <b>{{balance}}</b>
+          <b>{{ balance | currency}}</b>
         </div>
       </div>
     </div>

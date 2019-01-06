@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="navbar" style="width: 100%; top: 0;">
+    <div class="navbar" style="width: 100%; top: 0; position: fixed; z-index: 100">
       <div class="container">
         <div class="row" style="width: 100%; height: 100%;">
           <div class="col-sm-6">

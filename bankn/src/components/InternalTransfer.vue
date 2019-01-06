@@ -258,6 +258,7 @@ export default {
      var addData={
        accountNumber: this.receiAccountNumber,
        nameSug: this.dataReceive.full_name,
+       bankName: "BankN"
      };
      axios
         .post("http://192.168.0.130:3000/contacts", addData, {
