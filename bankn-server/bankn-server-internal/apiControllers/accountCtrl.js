@@ -50,7 +50,7 @@ router.get('/:id', (req, res) => {
 router.put('/balance', (req, res) => {
 
     var transaction = {
-        sendAccount: "0000000000000000",
+        sendAccount: "",
         receiAccount: req.body.accountNumber,
         description: "",
         amount: req.body.amount,

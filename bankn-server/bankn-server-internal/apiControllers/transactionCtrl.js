@@ -2,7 +2,7 @@ var express = require('express');
 
 var txRepo = require('../repos/transactionRepo');
 var otplib = require('otplib');
-
+var moment = require('moment');
 var otherBank = require('../repos/otherBankRepo');
 var router = express.Router();
 var nodemailer = require('nodemailer');
@@ -23,8 +23,15 @@ router.get('/', (req, res) => {
     }
 
     txRepo.loadTxsByUser(user).then((rows) => {
+        var contacts = [];
+        rows.forEach(row => {
+            if(moment().diff(row.date, "days") < 30) {
+                contacts.push(row);
+            }
+        });
+
         res.json({
-            contacts: rows
+            contacts: contacts
         })
     }).catch(err => {
         console.log(err);
@@ -249,12 +256,12 @@ router.post('/internal', (req, res) => {
 router.post('/external', (req, res) => {
 
     var transaction = {
-        userId: req.id,
         sendAccount: req.body.sendAccount,
         receiAccount: req.body.receiAccount,
-        desciption: req.body.description,
+        description: req.body.description,
         amount: req.body.amount,
-        idbank: req.body.idbank,
+        idbankto: req.body.idbank,
+        idbankfrom: 888,
         fee: 2000,
         type: 0
     }
