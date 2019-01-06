@@ -15,6 +15,12 @@ exports.loadAccontsByAccountNumber = account => {
     return db.load(sql);
 }
 
+exports.findAccountNumber = number => {
+    var sql = `select * from accounts where enable = 1 and accountNumber = ${number}`;
+    console.log(sql);
+    return db.load(sql);
+}
+
 exports.delete = account => {
     var sql = `update accounts set enable = 0 where user_id = ${account.user_id} and accountNumber = '${account.accountNumber}'`;
     return db.load(sql);

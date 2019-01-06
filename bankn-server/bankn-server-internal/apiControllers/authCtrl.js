@@ -27,11 +27,11 @@ router.post('/', (req, res) => {
                 res.status = 200;
                 res.json(object);
             })
-                .catch(err => {
-                    console.log('update refresh token: ' + err);
-                    res.status = 500;
-                    res.end('View error log on console');
-                })
+            .catch(err => {
+                console.log('update refresh token: ' + err);
+                res.status = 500;
+                res.end('View error log on console');
+            })
         } else {
             res.json({
                 auth: 0,

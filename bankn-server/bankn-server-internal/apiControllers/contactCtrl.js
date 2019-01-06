@@ -1,7 +1,7 @@
 var express = require('express');
 
 var contactRepo = require('../repos/contactRepo');
-
+var accountRepo = require('../repos/accountRepo');
 var router = express.Router();
 
 router.get('/', (req, res) => {
@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     if (user.id != undefined) {
         contactRepo.loadContactsByUser(user).then((rows) => {
             rows.forEach(row => {
-                if (row.nameSug===null) row.nameSug = row.full_name
+                if (row.nameSug === null) row.nameSug = row.full_name
             });
             res.json({
                 contacts: rows
@@ -33,22 +33,36 @@ router.post('/', (req, res) => {
         nameSug: req.body.nameSug,
         accountNumber: req.body.accountNumber
     }
-    if (contactEnity.id != undefined && contactEnity.nameSug != undefined && contactEnity.accountNumber != undefined) {
-        contactRepo.addContactByUser(contactEnity).then(() => {
-            res.status = 200;
-            res.json({
-                msg: 'success!'
-            })
-        }).catch(err => {
-            if (err === 'ER_DUP_ENTRY') {
-                res.json({
-                    code: 'ER_DUP_ENTRY',
-                    msg: 'duplicate!'
+    if (contactEnity.id != undefined && contactEnity.accountNumber != undefined) {
+        accountRepo.findAccountNumber(contactEnity.accountNumber).then(rows => {
+            if (rows.length > 0) {
+                if ( contactEnity.nameSug != undefined || contactEnity.nameSug == "") {
+                    contactEnity.nameSug = rows[0].full_name;
+                }
+                contactRepo.addContactByUser(contactEnity).then(() => {
+                    res.status = 200;
+                    res.json({
+                        msg: 'success!'
+                    })
+                }).catch(err => {
+                    if (err === 'ER_DUP_ENTRY') {
+                        res.json({
+                            code: 'ER_DUP_ENTRY',
+                            msg: 'duplicate!'
+                        })
+                    } else {
+                        console.log(err);
+                        res.statusCode = 500
+                    }
                 })
             } else {
-                console.log(err);
-                res.statusCode = 500
+                res.json({
+                    msg: 'account number invalid!'
+                })
             }
+        }).catch(err => {
+            console.log(err);
+            res.statusCode = 500
         })
     } else {
         res.statusCode = 500;
@@ -56,7 +70,6 @@ router.post('/', (req, res) => {
             msg: 'has one filed undefine'
         })
     }
-    
 })
 
 router.delete('/', (req, res) => {

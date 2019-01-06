@@ -18,10 +18,14 @@ exports.loadUserById = (id) => {
     return db.load(sql);
 }
 
+exports.loadUserByAccountNumber = (number) => {
+    var sql = `select * from users, accounts where accountNumber = ${number} and users.id = accounts.user_id`;
+    return db.load(sql);
+}
+
 exports.insert = (user) => {
     var sql = `INSERT INTO users (username, password, fullname, email, phoneNumber, role)
     VALUES
     ('${user.username}', '${user.password}', '${user.fullname}', '${user.email}', '${user.phone}', 1);`;
-    console.log(sql);
     return db.load(sql);
 }

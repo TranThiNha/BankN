@@ -6,7 +6,7 @@ var createConnection = () => {
     	port: '3306',
     	user: 'root',
     	password: '12345678a',
-        database: 'bankndb',
+        database: 'bankn',
     });
 }
 

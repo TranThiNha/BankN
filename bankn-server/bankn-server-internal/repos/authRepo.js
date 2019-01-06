@@ -80,6 +80,7 @@ exports.updateRefreshToken = (userId, rfToken) => {
         db.insert(sql).then(value => {
             var rdt = moment().format('YYYY-MM-DD HH:mm:ss');
             sql = `insert into userRefreshTokenExt values(${userId}, '${rfToken}', '${rdt}')`;
+            console.log(sql);
             return db.insert(sql);
         })
             .then(value => resolve(value))
