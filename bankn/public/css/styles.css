@@ -288,3 +288,39 @@ button {
     float: right;
     margin-top: 8px;
 }
+
+
+.button-small {
+    background: #FC4100;
+    border-radius: 5px;
+    padding: 5px 30px;
+    text-align: center;
+    border: 0px;
+    font-weight: 900;
+    font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.button-outline {
+    background: #fff;
+    border: 2px solid #ccc !important;
+    border-radius: 5px;
+    padding: 5px 30px;
+    text-align: center;
+    border: 0px;
+    font-weight: 900;
+    font-size: 18px;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.button-outline:hover {
+    background: #888;
+    border: 2px solid #888 !important;
+    color: #fff;
+}
+
+.rep-ava.chosen {
+    background: #787C92;
+}

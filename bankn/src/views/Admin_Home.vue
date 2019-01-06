@@ -1,4 +1,5 @@
 <template>
+<div class="body-admin" style="height:100vh; margin-top:-0px; padding-top:100px">
   <div class="container">
     <div class="logo">
       <img src="/icons/logo-white.png">
@@ -8,6 +9,7 @@
       <div class="balance">{{balance}}</div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
