@@ -135,7 +135,7 @@ export default {
   },
   created() {
     axios
-      .get("http://192.168.1.13:3000/users", {
+      .get("http://192.168.0.5:3000/users", {
         headers: {
           "x-access-token": this.$session.get('access_token')
         }
@@ -154,7 +154,7 @@ export default {
     },
     AcceptAddUser(user) {
       axios
-        .post("http://192.168.1.13:3000/users", this.dataUser, {
+        .post("http://192.168.0.5:3000/users", this.dataUser, {
           headers: {
             "x-access-token": this.$session.get('access_token')
           }

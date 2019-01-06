@@ -88,7 +88,7 @@ export default {
   created() {
     var id = this.$route.params.id;
     axios
-      .get(`http://192.168.1.13:3000/accounts/${id}`, {
+      .get(`http://192.168.0.5:3000/accounts/${id}`, {
         headers: {
           "x-access-token": this.$session.get('access_token')
         }
@@ -107,7 +107,7 @@ export default {
         userId: this.$route.params.id
       };
       axios
-        .post(`http://192.168.1.13:3000/accounts`, this.userId, {
+        .post(`http://192.168.0.5:3000/accounts`, this.userId, {
           headers: {
             "x-access-token": this.$session.get('access_token')
           }

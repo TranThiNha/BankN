@@ -57,7 +57,7 @@
           src="/icons/delete.png"
           style="float: right"
           v-if="type == 'remove'"
-          @click="ModalDeleteAccount(accountNumber)"
+          @click="ModalDeleteAccount(accountNumber, balance)"
         >
       </div>
       <div style="position: absolute; bottom: 0">
@@ -113,7 +113,7 @@ export default {
       };
       var obj = event.target;
       axios
-        .put("http://192.168.1.13:3000/accounts/balance", newAmount, {
+        .put("http://192.168.0.5:3000/accounts/balance", newAmount, {
           headers: {
             "x-access-token": this.$session.get('access_token')
           }
@@ -130,8 +130,8 @@ export default {
           }
         });
     },
-    ModalDeleteAccount(accountNumber) {
-        this.$emit("deleteAccount", accountNumber);
+    ModalDeleteAccount(accountNumber, balance) {
+        this.$emit("deleteAccount", accountNumber, balance);
     },
    
     // DeleteAccount(){
@@ -142,7 +142,7 @@ export default {
     //     alert(1);
     //   axios
     //     .put(
-    //       "http://192.168.1.13:3000/accounts/remove",
+    //       "http://192.168.0.5:3000/accounts/remove",
     //       { accountNumber: accountNumber },
     //       {
     //         headers: {
