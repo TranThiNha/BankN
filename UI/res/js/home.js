@@ -58,4 +58,19 @@ $(document).ready(function () {
         $("#transfer-modal").fadeOut("fast");
     })
 
+    // Thêm ở đây
+
+    $(".rep-info").hover(
+        function(){
+            $(this).find("#transfer").fadeIn(200);
+            $(this).find("#info").fadeOut(200);
+        },
+        function(){
+            $(this).find("#transfer").fadeOut(200);
+            $(this).find("#info").fadeIn(200);
+        }
+    )
+
+    // Thêm ở đây
+
 })

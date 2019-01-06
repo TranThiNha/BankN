@@ -87,12 +87,16 @@
     grid-template-columns: auto auto;
 }
 
+/* Đổi ở đây */
+
 .trans-item {
     background: #FFFFFF;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    padding: 20px 30px;
+    padding: 20px 20px;
 }
+
+/* Đổi ở đây */
 
 .trans-from {
     color: #0E1958;
@@ -100,11 +104,38 @@
     font-weight: 700;
 }
 
+/* Thêm ở đây */
+
+.trans-from>name {
+    color: #ccc;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: block;
+    margin-top: -5px;
+}
+
+/* Thêm ở đây */
+
 .trans-to {
     color: #FC4100;
     font-size: 24px;
     font-weight: 700;
 }
+
+/* Thêm ở đây */
+
+.trans-to>name {
+    color: #ccc;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: block;
+    margin-top: -5px;
+    margin-left: 40px;
+}
+
+/* Thêm ở đây */
 
 .trans-to>img {
     margin-right: 10px;

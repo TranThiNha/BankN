@@ -122,6 +122,22 @@ body {
     text-transform: uppercase;
 }
 
+/* Thêm ở đây */
+
+.button-small {
+    background: #FC4100;
+    border-radius: 5px;
+    padding: 5px 30px;
+    text-align: center;
+    border: 0px;
+    font-weight: 900;
+    font-size: 18px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+/* Thêm ở đây */
+
 .button-med.neg {
     background: #6F6A6A !important;
 }
