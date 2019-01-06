@@ -3,8 +3,6 @@ import App from './App.vue'
 import router from './router'
 import store from './store/store'
 
-// import VueLocalStorage from 'vue-localstorage'
-// Vue.use(VueLocalStorage)
 
 Vue.config.productionTip = false
 

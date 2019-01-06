@@ -5,7 +5,7 @@ import persistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
   plugins: [
     persistedState()
   ],
@@ -13,7 +13,12 @@ const store = new Vuex.Store({
     user: {},
     accounts: [],
     contacts: [],
-    allAccounts: []
+    allAccounts: [],
+    getOTP: false,
+    postOTP: false,
+    successInternal: false,
+    banks: [],
+    selectedBank:{}
   },
   getters: {
     getUser: state => {
@@ -35,13 +40,31 @@ const store = new Vuex.Store({
     },
     SET_ALL_USER(state, payload){
       state.allAccounts = payload
+    },
+    GET_OTP_FLAG(state, payload){
+      state.getOTP = payload
+    },
+    SET_POST_OTP_FLAG(state, payload){
+      state.postOTP = payload
+    },
+    RESET(state){
+      state.getOTP = false;
+      state.postOTP = false;
+      state.successInternal = false;
+    },
+    SET_SUCCESS_INTERNAL(state){
+      state.successInternal = true;
+    },
+    SET_BANKS(state, payload){
+      state.banks = payload
+    },
+    SET_SECLECTED_BANK(state, payload){
+      state.selectedBank = payload
     }
   },
   actions
 
 });
-
-export default store;
 
 
 

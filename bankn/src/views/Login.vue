@@ -68,7 +68,7 @@ export default {
       // var passmd5 = md5($("#password").val());
       // this.dataLogin.password = passmd5;
       axios
-        .post(`http://192.168.0.5:3000/auth`, this.dataLogin)
+        .post(`http://192.168.0.130:3000/auth`, this.dataLogin)
         .then(response => {
           // alert(JSON.stringify(response));
           if (response.data.auth == 1) {

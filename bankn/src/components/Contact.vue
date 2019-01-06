@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="rep-item" v-if="account != null ">
+    <div class="rep-item ver" v-if="account != null ">
       <div class="rep-ava" style="float: left">{{letter}}</div>
       <div>
         <div class="rep-name">{{nameSug}}</div>
@@ -8,7 +8,7 @@
       </div>
     </div>
 
-    <div class="acc-item" v-if="account == null ">
+    <div class="acc-item ver" v-if="account == null ">
       <div class="acc-ava" style="float: left">{{letter}}</div>
       <div>
         <div class="acc-name">{{nameSug}}</div>
