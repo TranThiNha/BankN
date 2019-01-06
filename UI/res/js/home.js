@@ -60,16 +60,33 @@ $(document).ready(function () {
 
     // Thêm ở đây
 
-    $(".rep-info").hover(
+    $(".rep-info").find(".info").mouseenter(
         function(){
-            $(this).find("#transfer").fadeIn(200);
-            $(this).find("#info").fadeOut(200);
-        },
-        function(){
-            $(this).find("#transfer").fadeOut(200);
-            $(this).find("#info").fadeIn(200);
+            $(this).parent().find(".transfer").fadeIn(200);
+            $(this).fadeOut(200);
         }
     )
+
+    $(".rep-info").find(".transfer").mouseleave(
+        function(){
+            $(this).parent().find(".info").fadeIn(200);
+            $(this).fadeOut(200);
+        }
+    )
+    
+    var avaPressed = false;
+
+    $(".rep-ava").click(function(){
+        var repItem = $(".rep-ava").parent();
+        if (avaPressed == false){
+            $(this).addClass("chosen");
+            repItem.find(".rep-info").hide();
+            repItem.find(".crud").show();
+            $(this).html("<img src='res/icons/rep-chosen.png'>");
+            avaPressed = true;
+        }
+        
+    })
 
     // Thêm ở đây
 

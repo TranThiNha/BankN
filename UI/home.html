@@ -212,7 +212,7 @@
                             <img id="card-remove" src="res/icons/delete.png" style="float: right">
                         </div>
                         <div style="position: absolute; bottom: 0">
-                            <div class="card-num">0976 3895 2834</div>
+                            <div class="card-num">0976 3895 2834 2321</div>
                             <div class="card-balance">
                                 Số dư:
                                 <b>9,000,000</b>
@@ -225,7 +225,7 @@
                             <img src="res/icons/delete.png" style="float: right">
                         </div>
                         <div style="position: absolute; bottom: 0">
-                            <div class="card-num">0976 3895 2834</div>
+                            <div class="card-num">0976 3895 2834 4324</div>
                             <div class="card-balance">
                                 Số dư:
                                 <b>9,000,000</b>
@@ -238,7 +238,7 @@
                             <img src="res/icons/delete.png" style="float: right">
                         </div>
                         <div style="position: absolute; bottom: 0">
-                            <div class="card-num">0976 3895 2834</div>
+                            <div class="card-num">0976 3895 2834 3213</div>
                             <div class="card-balance">
                                 Số dư:
                                 <b>9,000,000</b>
@@ -259,16 +259,20 @@
             <div class="container">
                 <div class="rep-container">
                     <!--Sửa ở đây-->
-                    
+
                     <div class="rep-item">
                         <div class="rep-ava" style="float: left"></div>
+                        <div class="crud" style="display: none;">
+                            <button id="add-acc-btn" class="button-outline" style="margin-top: 5px; width: auto">SỬA</button>
+                            <button id="add-acc-btn" class="button-outline" style="margin-top: 5px; width: auto">XÓA</button>
+                        </div>
                         <div class="rep-info" style="position: relative; margin-left: 68px;">
-                            <div id="transfer" style="display: none; position: absolute;">
+                            <div class="transfer" style="display: none; position: absolute;">
                                 <button id="add-acc-btn" class="button-small" style="margin-top: 5px;">Chuyển khoản</button>
                             </div>
-                            <div id="info" style="display: block; position: absolute;">
+                            <div class="info" style="display: block; position: absolute; cursor: pointer;">
                                 <div class="rep-name">Trần Lê Nguyễn Hoàng Minh</div>
-                                <div class="rep-num">0297 8927 2828</div>
+                                <div class="rep-num">0297 8927 2828 - <span style="font-weight: 900">BankN</span></div>
                             </div>
                         </div>
                     </div>
@@ -330,7 +334,7 @@
                         <div class="row" style="width: 100%; display: flex; align-items: flex-end; margin: 0px !important;">
                             <div class="col-sm-5" style="vertical-align: text-bottom; padding-bottom: 5px;">Cùng ngân
                                 hàng</div>
-                            <div class="col-sm-7 text-right trans-amount" style="float: right;">2,200,500</div>
+                            <div class="col-sm-7 text-right trans-amount from" style="float: right;">2,200,500</div>
                         </div>
                     </div>
                     <div class="trans-item">
@@ -351,7 +355,7 @@
                         <div class="row" style="width: 100%; display: flex; align-items: flex-end; margin: 0px !important;">
                             <div class="col-sm-5" style="vertical-align: text-bottom; padding-bottom: 5px;">Cùng ngân
                                 hàng</div>
-                            <div class="col-sm-7 text-right trans-amount" style="float: right;">2,200,500</div>
+                            <div class="col-sm-7 text-right trans-amount to" style="float: right;">2,200,500</div>
                         </div>
                     </div>
                     <div class="trans-item">

@@ -37,8 +37,8 @@
 
 .card-container {
     display: grid;
-    grid-column-gap: 60px;
-    grid-row-gap: 50px;
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
     grid-template-columns: auto auto;
 }
 
@@ -148,9 +148,16 @@
 }
 
 .trans-amount {
-    color: #3ADF00;
     font-weight: 700;
     font-size: 32px;
+}
+
+.trans-amount.from {
+    color: #3ADF00;
+}
+
+.trans-amount.to {
+    color: #FC0000;
 }
 
 .trans-amount::after {
