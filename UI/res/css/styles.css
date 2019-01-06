@@ -303,3 +303,8 @@ button {
     float: right;
     margin-top: 8px;
 }
+
+.transfer-method.chosen {
+    color: #fff;
+    background: #FC4100;
+}

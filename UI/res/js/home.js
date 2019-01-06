@@ -71,6 +71,11 @@ $(document).ready(function () {
         }
     )
 
+    $(".choose-card").click(function(){
+        $(".choose-card").removeClass("chosen");
+        $(this).addClass("chosen");
+    })
+
     // Thêm ở đây
 
 })
