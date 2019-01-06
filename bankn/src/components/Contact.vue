@@ -22,7 +22,7 @@
         <div class="info" @mouseenter="Mouseenter" style="display: block; position: absolute; cursor: pointer;">
           <div class="rep-name">{{nameSug}}</div>
           <div class="rep-num">{{account}} - 
-            <span style="font-weight: 900">BankN</span>
+            <span style="font-weight: 900">{{nameBank}}</span>
           </div>
         </div>
       </div>
@@ -46,7 +46,8 @@ export default {
   },
   props: {
     nameSug: String,
-    account: String
+    account: String,
+    nameBank: String
   },
   created() {
     this.letter = this.nameSug.slice(0, 1);

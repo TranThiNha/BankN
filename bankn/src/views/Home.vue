@@ -56,8 +56,16 @@
       </div>
     </div>
 
-    <OTPModal v-if="getOTP == true" :sendAccount="accountNumber" type="0" typeTransfer="internal"
-     :receiAccount="selected.accountNumber" :amount="balance" description="" @InternalSuccess="HandleInternalSuccess"/>
+    <OTPModal
+      v-if="getOTP == true"
+      :sendAccount="accountNumber"
+      type="0"
+      typeTransfer="internal"
+      :receiAccount="selected.accountNumber"
+      :amount="balance"
+      description
+      @InternalSuccess="HandleInternalSuccess"
+    />
 
     <Modal
       v-if="minModal == true"
@@ -112,7 +120,7 @@
       </div>
     </div>
 
-    <!--Rep Search Modal-->
+    <!--Choose card Modal-->
     <div
       id="rep-search-modal"
       class="modal-backdrop"
@@ -125,29 +133,41 @@
             style="border: none !important; border-radius: 10px;"
           >
             <div class="modal-title">Chọn thẻ của bạn</div>
-            <div class="rep-list">
-              <div v-for="acc in accounts" :key="acc.id">
-                <div class="rep-item ver" @click="selected = acc">
-                  <div>
-                    <div class="rep-name">{{acc.accountNumber}}</div>
-                    <div class="rep-num">{{acc.balance}} VNĐ</div>
+            <div style="position: relative; overflow: hidden; margin-bottom: 20px;">
+              <div
+                style="margin-top: 25px; max-height: 380px; margin-right: -20px; overflow-y: scroll; padding: 0px 7px;"
+              >
+                <div v-for="acc in accounts" :key="acc.id">
+                  <div
+                    class="transfer-method choose-card"
+                    style="margin-bottom: 15px; padding: 10px 20px;"
+                    @click="Select(acc)"
+                  >
+                    <div>{{acc.accountNumber}}</div>
+                    <div
+                      style="font-size: 14px; font-weight: 300 !important;"
+                    >{{acc.balance|currency}} VNĐ</div>
                   </div>
                 </div>
               </div>
-              <div v-if="hasSelected == true" style="color: red">Hãy chọn 1 tài khoản!</div>
             </div>
-            <div style="text-align: center;">
+            <div
+              v-if="hasSelected == true"
+              style="color: red; text-align:center"
+            >Hãy chọn 1 tài khoản!</div>
+            <div style="text-align: center; padding-left: 0px;">
               <button
-                id="rep-search-close"
+                id="choose-card-neg"
+                class="button-med neg button-modal"
+                style="width: 324px; float: left"
                 @click="CloseRepModal()"
-                class="button-med bn-close button-modal"
-                style="width: 324px;"
-              >ĐÓNG</button>
+              >Hủy</button>
               <button
+                id="choose-card-pos"
                 class="button-med button-modal"
+                style="width: 324px; float: right"
                 @click="TransferMoney(selected)"
-                style="width: 324px; float:right"
-              >XÁC NHẬN</button>
+              >Chọn</button>
             </div>
           </div>
         </div>
@@ -210,7 +230,7 @@
         </div>
       </div>
     </div>
-    <div id="page-content" class="container">
+    <div id="page-content" class="container" style="margin-top: 60px">
       <div id="cards" class="tab-content" style="display: block;">
         <div class="page-title" style="width: 100%; text-align: center">Danh sách thẻ của bạn</div>
         <div class="container" style="padding: 0px 100px">
@@ -233,7 +253,11 @@
         <div class="container">
           <div class="rep-container">
             <div v-for="contact in contacts" :key="contact.id">
-              <Contact :nameSug="contact.nameSug" :account="contact.account"/>
+              <Contact
+                :nameSug="contact.nameSug"
+                :account="contact.account"
+                :nameBank="contact.nameBank"
+              />
             </div>
           </div>
         </div>
@@ -256,50 +280,8 @@
         >Danh sách các giao dịch của bạn</div>
         <div class="container">
           <div class="trans-container">
-            <div class="trans-item">
-              <div class="row" style="width: 100%;">
-                <div class="col-sm-7">
-                  <div class="trans-from">9182 2928 9282</div>
-                  <div class="trans-to">
-                    <img src="/icons/trans-to.png">
-                    9182 2928 9282
-                  </div>
-                </div>
-                <div class="col-sm-5 text-right trans-date">12:30 AM, 17/08/2018</div>
-              </div>
-              <div class="text-right" style="width: 100%;">
-                <span class="trans-amount">2,200,500</span>
-              </div>
-            </div>
-            <div class="trans-item">
-              <div class="row" style="width: 100%;">
-                <div class="col-sm-7">
-                  <div class="trans-from">9182 2928 9282</div>
-                  <div class="trans-to">
-                    <img src="/icons/trans-to.png">
-                    9182 2928 9282
-                  </div>
-                </div>
-                <div class="col-sm-5 text-right trans-date">12:30 AM, 17/08/2018</div>
-              </div>
-              <div class="text-right" style="width: 100%;">
-                <span class="trans-amount">2,200,500</span>
-              </div>
-            </div>
-            <div class="trans-item">
-              <div class="row" style="width: 100%;">
-                <div class="col-sm-7">
-                  <div class="trans-from">9182 2928 9282</div>
-                  <div class="trans-to">
-                    <img src="/icons/trans-to.png">
-                    9182 2928 9282
-                  </div>
-                </div>
-                <div class="col-sm-5 text-right trans-date">12:30 AM, 17/08/2018</div>
-              </div>
-              <div class="text-right" style="width: 100%;">
-                <span class="trans-amount">2,200,500</span>
-              </div>
+            <div v-for="trans in transactions" :key="trans.sendAccount">
+              <TransactionHistory :info="trans"/>
             </div>
           </div>
         </div>
@@ -314,6 +296,7 @@ import Card from "@/components/Card.vue";
 import Contact from "@/components/Contact.vue";
 import Modal from "@/components/Modal.vue";
 import OTPModal from "@/components/OTPModal.vue";
+import TransactionHistory from "@/components/TransactionHistory.vue";
 
 import { mapState, mapActions } from "vuex";
 import axios from "axios";
@@ -337,12 +320,15 @@ export default {
     Card,
     Contact,
     Modal,
-    OTPModal
+    OTPModal,
+    TransactionHistory
   },
   computed: {
     ...mapState(["accounts"]),
     ...mapState(["contacts"]),
     ...mapState(["user"]),
+    ...mapState(["transactions"]),
+
     getOTP() {
       return this.$store.state.getOTP;
     }
@@ -382,14 +368,19 @@ export default {
       this.$jQuery("#add-rep-modal").hide();
     },
     AddContact(user) {
+      var addData = {
+        accountNumber: this.contactadd.accountNumber,
+        nameSug: this.contactadd.nameSug,
+        bankName: "BankN"
+      };
       axios
-        .post("http://192.168.0.130:3000/contacts", this.contactadd, {
+        .post("http://192.168.0.130:3000/contacts", addData, {
           headers: {
             "x-access-token": this.$store.state.user.access_token
           }
         })
         .then(response => {
-          // alert(JSON.stringify(response));
+          alert(JSON.stringify(response));
           this.$jQuery("#add-rep-modal").hide();
           if (response.data.msg == "success!") {
             this.contactadd = {};
@@ -456,8 +447,13 @@ export default {
         this.$store.dispatch("GetOTP");
       }
     },
-    HandleInternalSuccess(){
+    HandleInternalSuccess() {
       this.DeleteAccount();
+    },
+    Select(acc) {
+      this.selected = acc;
+      this.$jQuery(".choose-card").removeClass("chosen");
+      alert(this.$jQuery(event.target).attr("class"));
     }
   },
   watch: {

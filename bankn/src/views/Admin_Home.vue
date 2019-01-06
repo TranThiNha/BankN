@@ -6,7 +6,7 @@
     </div>
     <div>
       <div class="title">Số dư ví hiện tại là</div>
-      <div class="balance">{{balance}}</div>
+      <div class="balance">{{balance | currency}}</div>
     </div>
   </div>
 </div>

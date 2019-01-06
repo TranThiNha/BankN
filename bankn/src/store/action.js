@@ -97,9 +97,9 @@ export default {
                 }
             })
             .then(response => {
-                alert(JSON.stringify(response));
-                if (response.data.status == 200) {
-
+                if (response.status == 200) {
+                    alert(JSON.stringify(response.data));
+                    commit('SET_TRANSACTIONS', response.data.transactions)
                 }
             })
             .catch(err => {

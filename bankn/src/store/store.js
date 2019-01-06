@@ -18,7 +18,8 @@ export default new Vuex.Store({
     postOTP: false,
     successInternal: false,
     banks: [],
-    selectedBank:{}
+    selectedBank:{},
+    transactions: []
   },
   getters: {
     getUser: state => {
@@ -60,6 +61,9 @@ export default new Vuex.Store({
     },
     SET_SECLECTED_BANK(state, payload){
       state.selectedBank = payload
+    },
+    SET_TRANSACTIONS(state, payload){
+      state.transactions = payload
     }
   },
   actions

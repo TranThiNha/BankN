@@ -217,7 +217,30 @@ export default {
           alert(err);
         });
     },
-    AddContact() {},
+    AddContact() {
+      var addData={
+       accountNumber: this.receiAccountNumber,
+       nameSug: this.dataReceive.full_name,
+       bankName: this.$store.state.selectedBank.name
+     };
+     axios
+        .post("http://192.168.0.130:3000/contacts", addData, {
+          headers: {
+            "x-access-token": this.$store.state.user.access_token
+          }
+        })
+        .then(response => {
+          alert(JSON.stringify(response));
+          if (response.data.msg == "success!") {
+            this.$store.dispatch("UpdateListContact");
+          } else {
+            alert("fail");
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
+    },
     ExterTransfer() {
       this.$store.dispatch("GetOTP");
     }
