@@ -8,9 +8,9 @@ var contactCtrl = require('./apiControllers/contactCtrl');
 var accountCtrl = require('./apiControllers/accountCtrl');
 var userCtrl = require('./apiControllers/userCtrl');
 var transactionCtrl = require('./apiControllers/transactionCtrl');
-
+var minerCtrl = require('./apiControllers/minerCtrl');
 var verifyAccessToken = require('./repos/authRepo').verifyAccessToken;
-
+var receiTransaction = require('./apiControllers/receiveTransaction');
 app = express();
 
 app.use(morgan('dev'));
@@ -22,6 +22,8 @@ app.use('/contacts', verifyAccessToken, contactCtrl);
 app.use('/accounts', verifyAccessToken, accountCtrl);
 app.use('/users', verifyAccessToken, userCtrl);
 app.use('/transactions', verifyAccessToken, transactionCtrl);
+minerCtrl.mineBlockChain();
+receiTransaction.checkTransactionReceive();
 
 var PORT = process.env.PORT || 3000;
 app.listen(PORT, "0.0.0.0", () => {

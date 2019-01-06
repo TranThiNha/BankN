@@ -3,6 +3,7 @@ var express = require('express');
 var txRepo = require('../repos/transactionRepo');
 var otplib = require('otplib');
 
+var otherBank = require('../repos/otherBankRepo');
 var router = express.Router();
 var nodemailer = require('nodemailer');
 var userRepo = require('../repos/userRepo')
@@ -105,13 +106,14 @@ router.get('/otp', (req, res) => {
                         font-size: 18px;
                         padding: 30px;
                         text-align: left;
+                        color: #000;
                     }
             
                     .mail-body div {
                         margin: 15px 0px;
                     }
             
-                    receiver {
+                    .receiver {
                         font-weight: 700;
                         color: #FC4100;
                     }
@@ -124,8 +126,8 @@ router.get('/otp', (req, res) => {
                     }
             
                     .otp-cnt .otp-number {
-                        padding-top: 8px;
-                        height: 55px;
+                        padding-top: 5px;
+                        height: 60px;
                         background: #FC4100;
                         border-radius: 10px;
                         font-size: 36px;
@@ -143,13 +145,13 @@ router.get('/otp', (req, res) => {
             <div class="bankn-mail-body">
             
                 <img src="https://turnback.000webhostapp.com/imgs/logo.png">
-                <div>
+                <div class="otp-mail">
                     <div class="header">
                         Mã OTP chuyển khoản
                     </div>
                     <div class="mail-body">
                         <div>
-                            Chào <receiver>${user.full_name}</receiver>,
+                            Chào <span class="receiver">${user.full_name}</span>,
                         </div>
                         <div>
                             Chúng tôi gửi bạn mã OTP cho giao dịch chuyển khoản gần nhất của bạn.
@@ -190,21 +192,25 @@ router.get('/otp', (req, res) => {
 })
 
 router.post('/otp', (req, res) => {
-    const isValid = otplib.authenticator.check(req.body.otp, req.id);
-    if (isValid) {
-        res.status = 200;
-        res.json({
-            result: true
-        })
+    if (req.body.otp == undefined) {
+        const isValid = otplib.authenticator.check(req.body.otp, req.id);
+        if (isValid) {
+            res.status = 200;
+            res.json({
+                result: true
+            })
+        } else {
+            res.json({
+                result: false
+            })
+        }
     } else {
         res.json({
-            result: false
+            result: false,
+            msg: 'otp undefined'
         })
     }
-    res.json({
-        result: false,
-        msg: 'otp invalid'
-    })
+    
 })
 
 
@@ -217,9 +223,9 @@ router.post('/internal', (req, res) => {
         description: req.body.description,
         amount: req.body.amount,
         fee: 1000,
-        type: 0
+        idbank: 888,
+        type: req.body.type
     }
-
     txRepo.send(transaction).then(row => {
         console.log(row[0][0]);
         if (row[0][0].result == 1) {
@@ -249,43 +255,48 @@ router.post('/external', (req, res) => {
         desciption: req.body.description,
         amount: req.body.amount,
         idbank: req.body.idbank,
-        fee: 1000,
+        fee: 2000,
         type: 0
     }
 
+    txRepo.send(transaction).then(row => {
+        if (row[0][0].result == 1) {
+            res.json({
+                msg: 'success'
+            })
 
-
-    axios.post('/sendTransaction', {
-        'accountFrom': {
-            'id': transaction.sendAccount,
-            'idbank': 888
-        },
-        'accountTo': {
-            'id': transaction.receiAccount,
-            'idbank': transaction.idbank
-        },
-        'amount' : parseInt(transaction.amount),
-        'address' : ''
-    }).then(respone => {
-        console.log(respone);
+            otherBank.loadOtherBankById(transaction.idbank).then(rows => {
+                let bank = rows[0];
+                axios.post('/sendTransaction', {
+                    'accountFrom': {
+                        'id': transaction.sendAccount,
+                        'idbank': 888
+                    },
+                    'accountTo': {
+                        'id': transaction.receiAccount,
+                        'idbank': transaction.idbank
+                    },
+                    'amount' : transaction.amount,
+                    'address' : bank.address
+                }).then(respone => {
+                    console.log(respone);
+                }).catch(err => {
+                    console.log('send transaction error: ' + err);
+                })
+            }).catch(err => {
+                console.log('error load bank' + err);
+            })
+        } else {
+            res.json({
+                msg: 'failed'
+            })
+        }
     }).catch(err => {
-        console.log('send transaction error: ' + err);
+        console.log('error internal: ' + err)
+        res.json({
+            msg: 'failed'
+        })
     })
-    
-
-    // txRepo.send(transaction).then(row => {
-    //     if (row.result == 0) {
-    //         res.json({
-    //             msg: 'failed'
-    //         })
-    //     } else if (row.result == 1) {
-    //         res.json({
-    //             msg: 'success'
-    //         })
-    //     }
-    // }).catch(err => {
-    //     console.log(err)
-    // })
 })
 
 
