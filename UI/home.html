@@ -44,7 +44,7 @@
     </div>
 
     <!--Choose card Modal-->
-    <div id="card-rep-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: block;">
+    <div id="card-rep-modal" class="modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
         <div class="modal" role="dialog" style="display: block;">
             <div class="modal-dialog" role="document" style="width: 400px;">
                 <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
@@ -81,12 +81,57 @@
                                 <div>1234567678</div>
                                 <div style="font-size: 14px; font-weight: 300 !important;">345678 VNĐ</div>
                             </div>
-                            
+
                         </div>
                     </div>
                     <div style="text-align: center; padding-left: 0px;">
                         <button id="choose-card-neg" class="button-med neg button-modal" style="width: 324px; float: left">Hủy</button>
                         <button id="choose-card-pos" class="button-med button-modal" style="width: 324px; float: right">Chọn</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Edit Modal-->
+    <div id="edit-modal" class="edit-modal modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: none;">
+        <div class="modal" role="dialog" style="display: block;">
+            <div class="modal-dialog" role="document" style="width: 400px;">
+                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
+                    <div class="modal-title">
+                        Chỉnh sửa người nhận
+                    </div>
+                    <div style="margin: 20px 0px 10px 0px">
+                        <label class="input-normal-label">Số tài khoản</label>
+                        <input type="number" class="input-normal" style="width: 100%" placeholder="Nhập số tài khoản">
+                    </div>
+                    <div style="margin-bottom: 30px;">
+                        <label class="input-normal-label">Tên gợi nhớ</label>
+                        <input type="text" class="input-normal" style="width: 100%" placeholder="Nhập tên gợi nhớ">
+                    </div>
+                    <div style="text-align: center; padding-left: 0px;">
+                        <button id="edit-neg" class="button-med neg button-modal" style="width: 324px; float: left">Hủy</button>
+                        <button id="edit-pos" class="button-med button-modal" style="width: 324px; float: right">Thêm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Delete Modal-->
+    <div id="delete-modal" class="edit-modal modal-backdrop" style="background-color: rgba(0,0,0,0.5); display: block;">
+        <div class="modal" role="dialog" style="display: block;">
+            <div class="modal-dialog" role="document" style="width: 400px;">
+                <div class="modal-content modal-style" style="border: none !important; border-radius: 10px;">
+                    <div class="modal-title">
+                        Xóa tài khoản
+                    </div>
+                    <div class="modal-des">
+                        Bạn có muốn xóa người nhận này khỏi danh bạ?
+                    </div>
+                    <div style="text-align: center; padding-left: 0px; margin-top: 20px;">
+                        <button id="delete-neg" class="button-med neg button-modal" style="width: 324px; float: left">Hủy</button>
+                        <button id="delete-pos" class="button-med button-modal" style="width: 324px; float: right">Xóa</button>
                     </div>
                 </div>
             </div>
@@ -312,7 +357,7 @@
 
                     <div class="rep-item">
                         <div class="rep-ava" style="float: left"></div>
-                        <div class="crud" style="display: none;">
+                        <div class="crud" style="display: none; position: absolute; margin-left: 68px;">
                             <button id="add-acc-btn" class="button-outline" style="margin-top: 5px; width: auto">SỬA</button>
                             <button id="add-acc-btn" class="button-outline" style="margin-top: 5px; width: auto">XÓA</button>
                         </div>
@@ -330,23 +375,49 @@
                     <!--Sửa ở đây-->
                     <div class="rep-item">
                         <div class="rep-ava" style="float: left"></div>
-                        <div>
-                            <div class="rep-name">Trần Lê Nguyễn Hoàng Minh</div>
-                            <div class="rep-num">0297 8927 2828</div>
+                        <div class="crud" style="display: none; position: absolute; margin-left: 68px;">
+                            <button id="add-acc-btn" class="button-outline edit-btn" style="margin-top: 5px; width: auto">SỬA</button>
+                            <button id="add-acc-btn" class="button-outline delete-btn" style="margin-top: 5px; width: auto">XÓA</button>
+                        </div>
+                        <div class="rep-info" style="position: relative; margin-left: 68px;">
+                            <div class="transfer" style="display: none; position: absolute;">
+                                <button id="add-acc-btn" class="button-small" style="margin-top: 5px;">Chuyển khoản</button>
+                            </div>
+                            <div class="info" style="display: block; position: absolute; cursor: pointer;">
+                                <div class="rep-name">Lê Nguyễn Hoàng Minh</div>
+                                <div class="rep-num">0297 8927 2828 - <span style="font-weight: 900">BankN</span></div>
+                            </div>
                         </div>
                     </div>
                     <div class="rep-item">
                         <div class="rep-ava" style="float: left"></div>
-                        <div>
-                            <div class="rep-name">Lê Nguyễn Hoàng Minh</div>
-                            <div class="rep-num">0297 8927 2828</div>
+                        <div class="crud" style="display: none; position: absolute; margin-left: 68px;">
+                            <button id="add-acc-btn" class="button-outline" style="margin-top: 5px; width: auto">SỬA</button>
+                            <button id="add-acc-btn" class="button-outline" style="margin-top: 5px; width: auto">XÓA</button>
                         </div>
-                    </div>
-                    <div class="rep-item">
+                        <div class="rep-info" style="position: relative; margin-left: 68px;">
+                            <div class="transfer" style="display: none; position: absolute;">
+                                <button id="add-acc-btn" class="button-small" style="margin-top: 5px;">Chuyển khoản</button>
+                            </div>
+                            <div class="info" style="display: block; position: absolute; cursor: pointer;">
+                                <div class="rep-name">Trần Lê Nguyễn Hoàng Minh</div>
+                                <div class="rep-num">0297 8927 2828 - <span style="font-weight: 900">BankN</span></div>
+                            </div>
+                        </div>
+                    </div><div class="rep-item">
                         <div class="rep-ava" style="float: left"></div>
-                        <div>
-                            <div class="rep-name">Trần Lê Nguyễn Hoàng Minh</div>
-                            <div class="rep-num">0297 8927 2828</div>
+                        <div class="crud" style="display: none; position: absolute; margin-left: 68px;">
+                            <button id="add-acc-btn" class="button-outline" style="margin-top: 5px; width: auto">SỬA</button>
+                            <button id="add-acc-btn" class="button-outline" style="margin-top: 5px; width: auto">XÓA</button>
+                        </div>
+                        <div class="rep-info" style="position: relative; margin-left: 68px;">
+                            <div class="transfer" style="display: none; position: absolute;">
+                                <button id="add-acc-btn" class="button-small" style="margin-top: 5px;">Chuyển khoản</button>
+                            </div>
+                            <div class="info" style="display: block; position: absolute; cursor: pointer;">
+                                <div class="rep-name">Trần Lê Nguyễn Hoàng Minh</div>
+                                <div class="rep-num">0297 8927 2828 - <span style="font-weight: 900">BankN</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
