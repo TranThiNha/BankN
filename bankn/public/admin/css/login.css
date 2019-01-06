@@ -1,0 +1,31 @@
+body {
+    background: url(../imgs/bg.png);
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.logo {
+    margin-top: 40px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-form {
+    width: 375px;
+    background: #FFFFFF;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 35px;
+    padding-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #001339;
+    text-align: center;
+    margin-bottom: 20px;
+}

@@ -82,8 +82,11 @@ export default {
             if (user.role == 1) {
               this.$router.replace("/home");
             }
-            else{
+            else if (user.role == 2){
               this.$router.replace("/staff-home");
+            }
+            else if (user.role == 3){
+              this.$router.replace("/admin-home");
             }
           } else {
             alert("Sai");
