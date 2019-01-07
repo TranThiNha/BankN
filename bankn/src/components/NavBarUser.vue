@@ -37,20 +37,20 @@
           >
             <div class="modal-title">Chọn hình thức</div>
             <div style="margin-top: 25px;">
-              <div class="transfer-method" style="margin-bottom: 25px;">
-                <router-link to="/exter">
+              <router-link to="/exter">
+                <div class="transfer-method" style="margin-bottom: 25px;">
                   <img src="/icons/exter-transfer.png" class="icon">
-                  <span>Liên ngân hàng</span>
+                  <span class="type">Liên ngân hàng</span>
                   <img src="/icons/transfer-goto.png" class="goto">
-                </router-link>
-              </div>
-              <div class="transfer-method" style="margin-bottom: 35px;">
-                <router-link to="/internal">
+                </div>
+              </router-link>
+              <router-link to="/internal">
+                <div class="transfer-method" style="margin-bottom: 35px;">
                   <img src="/icons/inter-transfer.png" class="icon">
                   <span>Cùng ngân hàng</span>
                   <img src="/icons/transfer-goto.png" class="goto">
-                </router-link>
-              </div>
+                </div>
+              </router-link>
             </div>
             <div style="text-align: center;">
               <button

@@ -1,6 +1,6 @@
 
 <template>
-  <div id="bg">
+  <div id="bg" style="margin-top: -40px;">
     <div class="container">
       <div class="logo">
         <img src="/icons/logo-white-login.png">
@@ -31,9 +31,9 @@
                 v-model="dataLogin.password"
               >
             </div>
-            <!-- <vue-recaptcha @verify="onVerify" sitekey="6LewKIUUAAAAAP1n2vt257R034CUmGSlsHNsJFaU"></vue-recaptcha> -->
+            <vue-recaptcha @verify="onVerify" sitekey="6LewKIUUAAAAAP1n2vt257R034CUmGSlsHNsJFaU"></vue-recaptcha>
             <div style="margin-top: 30px">
-              <button type="submit" class="button-big" style="width: 100%;">Đăng nhập</button>
+              <button disabled type="submit" class="button-big" style="width: 100%;">Đăng nhập</button>
             </div>
           </form>
         </div>
@@ -44,7 +44,7 @@
 
 <script>
 // @ is an alias to /src
-// import VueRecaptcha from "vue-recaptcha";
+import VueRecaptcha from 'vue-recaptcha';
 import axios from "axios";
 import { mapActions } from "vuex";
 
@@ -56,10 +56,11 @@ export default {
     };
   },
   components: {
-    // VueRecaptcha
+    VueRecaptcha
   },
   methods: {
     onVerify: function(response) {
+      this.$jQuery(".button-big").removeAttr('disabled');
       //chỗ này là hiện cái nút lên nè
     },
     login() {

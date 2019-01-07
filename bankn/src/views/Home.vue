@@ -469,7 +469,7 @@ export default {
           }
         })
         .then(response => {
-          alert(JSON.stringify(response));
+          // alert(JSON.stringify(response));
           this.$jQuery("#add-rep-modal").hide();
           if (response.data.msg == "success!") {
             this.contactadd = {};
@@ -503,7 +503,7 @@ export default {
           }
         )
         .then(response => {
-          alert(JSON.stringify(response));
+          // alert(JSON.stringify(response));
           if (response.data.granted == 0) {
             this.minModal = true;
           } else if (response.data.granted == 1) {
@@ -529,7 +529,7 @@ export default {
       this.$jQuery("#rep-search-modal").fadeOut("fast");
     },
     TransferMoney(selected) {
-      alert(JSON.stringify(selected));
+      // alert(JSON.stringify(selected));
       if (selected == null) {
         this.hasSelected = true;
       } else {
@@ -542,7 +542,9 @@ export default {
     Select(acc) {
       this.selected = acc;
       this.$jQuery(".choose-card").removeClass("chosen");
-      alert(this.$jQuery(event.target).attr("class"));
+      var target = this.$jQuery(event.target);
+      if (!this.$jQuery(event.target).hasClass("choose-card")) target = this.$jQuery(event.target).parents(".choose-card");
+      target.addClass("chosen");
     },
     HandelUpdate(account, name) {
       this.$jQuery("#edit-modal").fadeIn("fast");

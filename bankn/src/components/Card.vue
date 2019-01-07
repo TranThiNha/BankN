@@ -61,7 +61,7 @@
         >
       </div>
       <div style="position: absolute; bottom: 0">
-        <div class="card-num">{{accountNumber}}</div>
+        <div class="card-num card-num-format">{{accountNumber}}</div>
         <div class="card-balance">
           Số dư:
           <b>{{ balance | currency}}</b>
@@ -115,7 +115,7 @@ export default {
       axios
         .put("http://192.168.0.130:3000/accounts/balance", newAmount, {
           headers: {
-            "x-access-token": this.$session.get('access_token')
+            "x-access-token": this.$session.get("access_token")
           }
         })
         .then(ponse => {
@@ -131,10 +131,8 @@ export default {
         });
     },
     ModalDeleteAccount(accountNumber, balance) {
-        this.$emit("deleteAccount", accountNumber, balance);
-    },
-   
-    
+      this.$emit("deleteAccount", accountNumber, balance);
+    }
   }
 };
 </script>

@@ -197,14 +197,14 @@ export default {
         }
       });
 
-      alert(JSON.stringify(rsBank));
+      // alert(JSON.stringify(rsBank));
 
       axios
         .get(
           `http://${rsBank.domain}/account/accountNumber/${receiAccountNumber}`
         )
         .then(response => {
-          alert(JSON.stringify(response));
+          // alert(JSON.stringify(response));
           if (response.status == 200) {
             this.$store.dispatch("SetSelectedBank", rsBank);
             this.receiAccountNumber = receiAccountNumber;
@@ -230,7 +230,7 @@ export default {
           }
         })
         .then(response => {
-          alert(JSON.stringify(response));
+          // alert(JSON.stringify(response));
           if (response.data.msg == "success!") {
             this.$store.dispatch("UpdateListContact");
           } else {
