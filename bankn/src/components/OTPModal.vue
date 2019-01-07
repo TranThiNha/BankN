@@ -121,7 +121,7 @@ export default {
       if (_new == true) {
         this.otp = "";
         this.$jQuery("#otp-modal").hide();
-        alert(this.typeTransfer);
+        // alert(this.typeTransfer);
         if (this.typeTransfer == "internal"){
         this.$store.dispatch("TransactionInternal", this.dataSend);
         }

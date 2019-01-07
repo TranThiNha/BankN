@@ -34,7 +34,7 @@ export default {
                 }
             })
             .then(response => {
-                alert(JSON.stringify(response));
+                // alert(JSON.stringify(response));
                 if (response.status == 200) {
                     commit('SET_LIST_CONTACT', response.data.contacts);
                 }
@@ -51,7 +51,7 @@ export default {
         axios
             .get("http://192.168.0.130:3000/contacts", {
                 headers: {
-                    "x-access-token": state.access_token
+                    "x-access-token": state.user.access_token
                 }
             })
             .then(response => {
@@ -98,7 +98,7 @@ export default {
             })
             .then(response => {
                 if (response.status == 200) {
-                    alert(JSON.stringify(response.data));
+                    // alert(JSON.stringify(response.data));
                     commit('SET_TRANSACTIONS', response.data.transactions)
                 }
             })
@@ -117,7 +117,7 @@ export default {
                 }
             })
             .then(response => {
-                alert("OTP" + JSON.stringify(response));
+                // alert("OTP" + JSON.stringify(response));
                 if (response.data.msg == "success") {
                     commit('GET_OTP_FLAG', true);
                 }
@@ -137,7 +137,7 @@ export default {
                 }
             })
             .then(response => {
-                alert(JSON.stringify(response));
+                // alert(JSON.stringify(response));
                 if (response.status == 200) {
                     commit('SET_POST_OTP_FLAG', true);
                 }
@@ -150,7 +150,7 @@ export default {
         ctx.commit('RESET');
     },
     TransactionExternal({ commit, state }, dataSent) {
-        alert(JSON.stringify(dataSent));
+        // alert(JSON.stringify(dataSent));
         axios
             .post(
                 "http://192.168.0.130:3000/transactions/internal", {
@@ -166,11 +166,11 @@ export default {
                 }
             )
             .then(response => {
-                alert(JSON.stringify(response));
+                // alert(JSON.stringify(response));
                   if (response.data.msg == "success") {
                       commit('SET_SUCCESS_INTERNAL', true);
                   } else {
-                    alert(response.data.msg);
+                    // alert(response.data.msg);
                   }
             })
             .catch(err => {
@@ -199,7 +199,7 @@ export default {
 
     },
     TransactionExternal({ commit, state }, dataSent){
-        alert(JSON.stringify(state.selectedBank));
+        // alert(JSON.stringify(state.selectedBank));
         axios
             .post("http://192.168.0.130:3000/transactions/external",
             {
@@ -214,7 +214,7 @@ export default {
                 }
             })
             .then(response => {
-                alert(JSON.stringify(response));
+                // alert(JSON.stringify(response));
                 if (response.data.msg == "success!") {
                     // commit('SET_BANKS', response.data.otherBanks);
                 }
