@@ -18,3 +18,7 @@
 .rep-item.ver {
     margin-bottom: 25px;
 }
+
+.crud>button {
+    margin-right: 10px;
+}

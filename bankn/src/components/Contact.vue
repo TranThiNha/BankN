@@ -6,12 +6,12 @@
         <button
           id="add-acc-btn"
           class="button-outline edit-btn"
-          style="margin-top: 5px; width: auto"
+          style="margin-top: 5px; width: auto" @click="UpdateContact(account, nameSug)"
         >SỬA</button>
         <button
           id="add-acc-btn"
           class="button-outline delete-btn"
-          style="margin-top: 5px; width: auto"
+          style="margin-top: 5px; width: auto" @click="DeleteContact(account, nameSug)"
         >XÓA</button>
       </div>
       <div class="rep-info" style="position: relative; margin-left: 68px;">
@@ -144,6 +144,12 @@ export default {
           this.$jQuery(event.target).html("<img src='/icons/rep-chosen.png'>");
         }
       }
+    },
+    UpdateContact(account, nameSug){
+      this.$emit('Update', account, nameSug);
+    },
+    DeleteContact(account, nameSug){
+      this.$emit('Delete', account, nameSug);
     }
   }
 };

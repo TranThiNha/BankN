@@ -51,7 +51,7 @@ export default {
         axios
             .get("http://192.168.0.130:3000/contacts", {
                 headers: {
-                    "x-access-token": state.access_token
+                    "x-access-token": state.user.access_token
                 }
             })
             .then(response => {

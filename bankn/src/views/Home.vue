@@ -1,5 +1,91 @@
 <template>
   <div>
+    <!--Edit Modal-->
+    <div
+      id="edit-modal"
+      class="edit-modal modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div class="modal-title">Chỉnh sửa người nhận</div>
+            <div style="margin: 20px 0px 10px 0px">
+              <label class="input-normal-label">Số tài khoản</label>
+              <input
+                v-model="editAccount"
+                type="number"
+                disabled
+                class="input-normal"
+                style="width: 100%"
+                placeholder="Nhập số tài khoản"
+              >
+            </div>
+            <div style="margin-bottom: 30px;">
+              <label class="input-normal-label">Tên gợi nhớ</label>
+              <input
+                v-model="editName"
+                type="text"
+                class="input-normal"
+                style="width: 100%"
+                placeholder="Nhập tên gợi nhớ"
+              >
+            </div>
+            <div style="text-align: center; padding-left: 0px;">
+              <button
+                id="edit-neg"
+                class="button-med neg button-modal"
+                style="width: 324px; float: left"
+                @click="CancelEdit()"
+              >Hủy</button>
+              <button
+                id="edit-pos"
+                class="button-med button-modal"
+                style="width: 324px; float: right"
+                @click="AddEdit()"
+              >Thêm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Delete Modal-->
+    <div
+      id="delete-modal"
+      class="edit-modal modal-backdrop"
+      style="background-color: rgba(0,0,0,0.5); display: none;"
+    >
+      <div class="modal" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+          <div
+            class="modal-content modal-style"
+            style="border: none !important; border-radius: 10px;"
+          >
+            <div class="modal-title">Xóa tài khoản</div>
+            <div class="modal-des">Bạn có muốn xóa người nhận này khỏi danh bạ?</div>
+            <div style="text-align: center; padding-left: 0px; margin-top: 20px;">
+              <button
+                id="delete-neg"
+                class="button-med neg button-modal"
+                style="width: 324px; float: left"
+                @click="CancelEditDelete"
+              >Hủy</button>
+              <button
+                id="delete-pos"
+                class="button-med button-modal"
+                style="width: 324px; float: right"
+                @click="AcceptEditDelete"
+              >Xóa</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!--Add Rep Modal-->
     <div
       id="add-rep-modal"
@@ -257,6 +343,8 @@
                 :nameSug="contact.nameSug"
                 :account="contact.account"
                 :nameBank="contact.nameBank"
+                @Update="HandelUpdate"
+                @Delete="HandleDelete"
               />
             </div>
           </div>
@@ -313,7 +401,8 @@ export default {
       failAddContact: false,
       selected: null,
       hasSelected: false,
-      otpflag: false
+      otpflag: false,
+      editAccount: ""
     };
   },
   components: {
@@ -454,6 +543,71 @@ export default {
       this.selected = acc;
       this.$jQuery(".choose-card").removeClass("chosen");
       alert(this.$jQuery(event.target).attr("class"));
+    },
+    HandelUpdate(account, name) {
+      this.$jQuery("#edit-modal").fadeIn("fast");
+      this.editAccount = account;
+      this.editName = name;
+    },
+    CancelEdit() {
+      this.$jQuery("#edit-modal").fadeOut("fast");
+    },
+    AddEdit() {
+      axios
+        .put(
+          "http://192.168.0.130:3000/contacts/nameSug",
+          {
+            accountNumber: this.editAccount,
+            nameSug: this.editName
+          },
+          {
+            headers: {
+              "x-access-token": this.$store.state.user.access_token
+            }
+          }
+        )
+        .then(response => {
+          alert(JSON.stringify(response));
+          if (response.data.msg == "success") {
+            this.$jQuery("#edit-modal").fadeOut("fast");
+             this.$store.dispatch("UpdateListContact");
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
+    },
+    HandleDelete(account, nameSug) {
+      this.editAccount = account;
+      this.editName = name;
+      this.$jQuery("#delete-modal").fadeIn("fast");
+    },
+    CancelEditDelete() {
+      this.$jQuery("#delete-modal").fadeOut("fast");
+    },
+    AcceptEditDelete() {
+      axios
+        .post(
+          "http://192.168.0.130:3000/contacts/remove",
+          {
+            accountNumber: this.editAccount,
+          },
+          {
+            headers: {
+              "x-access-token": this.$store.state.user.access_token
+            }
+          }
+        )
+        .then(response => {
+          alert(JSON.stringify(response));
+          if (response.data.msg=="success!") {
+            this.$jQuery("#delete-modal").fadeOut("fast");
+             this.$store.dispatch("UpdateListContact");
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
     }
   },
   watch: {
