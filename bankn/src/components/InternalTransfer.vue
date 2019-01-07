@@ -267,7 +267,7 @@ export default {
           }
         })
         .then(response => {
-          alert(JSON.stringify(response));
+          // alert(JSON.stringify(response));
           if (response.data.msg == "success!") {
             this.$store.dispatch("UpdateListContact");
           } else {

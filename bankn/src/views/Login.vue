@@ -1,6 +1,6 @@
 
 <template>
-  <div id="bg">
+  <div id="bg" style="margin-top: -40px;">
     <div class="container">
       <div class="logo">
         <img src="/icons/logo-white-login.png">
